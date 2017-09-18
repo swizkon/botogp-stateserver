@@ -1,7 +1,6 @@
-﻿using System;
-namespace BotoGP.stateserver.Models
+﻿namespace BotoGP.stateserver.Models
 {
-	public class RaceState
+    public class RaceState
 	{
 		public string RiderId { get; set; }
 		public string RiderKey { get; set; }
@@ -11,9 +10,5 @@ namespace BotoGP.stateserver.Models
 
 		public int PosX { get; set; }
 		public int PosY { get; set; }
-
-		//public RaceState()
-		//{
-		//}
 	}
 }

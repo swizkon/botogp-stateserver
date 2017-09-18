@@ -16,10 +16,10 @@ namespace BotoGP.Web
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public static IConfiguration Configuration { get; set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+		// This method gets called by the runtime. Use this method to add services to the container.
+		public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
         }
@@ -27,6 +27,16 @@ namespace BotoGP.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+			var builder = new ConfigurationBuilder();
+
+			if (env.IsDevelopment())
+			{
+                builder.SetBasePath(env.ContentRootPath)
+			           .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+			}
+
+			Configuration = builder.Build();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
