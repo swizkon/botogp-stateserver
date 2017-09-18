@@ -15,35 +15,36 @@ namespace BotoGP.stateserver.Repos
 
         private DocumentClient client;
 
+        private virtual abstract string CollectionName;
+
         public BaseRepo()
-		{
-			var endPointUri = Startup.Configuration.GetSection("AppSettings")["StorageEndpointUri"];
-			var primaryKey = Startup.Configuration.GetSection("AppSettings")["StoragePrimaryKey"];
+        {
+            var endPointUri = Startup.Configuration.GetSection("AppSettings")["StorageEndpointUri"];
+            var primaryKey = Startup.Configuration.GetSection("AppSettings")["StoragePrimaryKey"];
 
             this.client = new DocumentClient(new Uri(endPointUri), primaryKey);
         }
 
-        protected IEnumerable<T> All(string collectionName)
+        protected IEnumerable<T> All()
         {
 			FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<T> q = this.client.CreateDocumentQuery<T>(
-					UriFactory.CreateDocumentCollectionUri(DatabaseName, collectionName), queryOptions);
+					UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), queryOptions);
             
             return q.ToList<T>();
         }
 
-
-		protected async Task CreateDocumentIfNotExists(string collectionName, string documentId, object document)
+		protected async Task CreateDocumentIfNotExists(string documentId, object document)
 		{
 			try
 			{
-				await this.client.ReadDocumentAsync(UriFactory.CreateDocumentUri(DatabaseName, collectionName, documentId));
+				await this.client.ReadDocumentAsync(UriFactory.CreateDocumentUri(DatabaseName, CollectionName, documentId));
 			}
 			catch (DocumentClientException de)
 			{
 				if (de.StatusCode == HttpStatusCode.NotFound)
 				{
-					await this.client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, collectionName), document);
+					await this.client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), document);
 				}
 				else
 				{

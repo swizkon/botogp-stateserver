@@ -10,16 +10,16 @@ namespace BotoGP.stateserver.Repos
 {
     public class CircuitRepo : BaseRepo<Circuit>
     {
-        const string CollectionName = "Circuits";
+        string CollectionName = "Circuits";
 
-        public IEnumerable<Circuit> All()
-        {
-            return base.All(CollectionName);
-        }
+        //public IEnumerable<Circuit> All()
+        //{
+        //    return base.All();
+        //}
 
         public async Task CreateIfNotExists(Circuit circuit)
         {
-            await base.CreateDocumentIfNotExists(CollectionName, circuit.Id.ToString(), circuit);
+            await base.CreateDocumentIfNotExists(circuit.Id.ToString(), circuit);
         }
     }
 }
