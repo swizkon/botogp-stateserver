@@ -15,17 +15,18 @@ namespace BotoGP.stateserver.Repos
 
         private DocumentClient client;
 
-        private virtual abstract string CollectionName;
+        string CollectionName => typeof(T).Name + "Collection";
 
         public BaseRepo()
         {
+            var all = Startup.Configuration;
             var endPointUri = Startup.Configuration.GetSection("AppSettings")["StorageEndpointUri"];
             var primaryKey = Startup.Configuration.GetSection("AppSettings")["StoragePrimaryKey"];
 
             this.client = new DocumentClient(new Uri(endPointUri), primaryKey);
         }
 
-        protected IEnumerable<T> All()
+        public IEnumerable<T> All()
         {
 			FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
             IQueryable<T> q = this.client.CreateDocumentQuery<T>(

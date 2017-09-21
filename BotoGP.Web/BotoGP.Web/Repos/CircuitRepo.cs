@@ -10,7 +10,7 @@ namespace BotoGP.stateserver.Repos
 {
     public class CircuitRepo : BaseRepo<Circuit>
     {
-        string CollectionName = "Circuits";
+        // protected override string CollectionName => "Circuits";
 
         //public IEnumerable<Circuit> All()
         //{

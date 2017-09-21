@@ -18,7 +18,7 @@ namespace BotoGP.stateserver.Models
 
         public string Checkpoints { get; set; } = "[[150,20],[130,20],[30,50],[50,80],[20,180]]";
 
-		public string HeatMap { get; set; }
+		// public string HeatMap { get; set; }
 
 		public override string ToString()
 		{

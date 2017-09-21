@@ -14,16 +14,12 @@ namespace BotoGP.stateserver.Controllers
     public class CircuitController : Controller
     {
         private static List<Circuit> cache;
-		CircuitRepo repo =  new CircuitRepo();
+		CircuitRepo repo = new CircuitRepo();
 
         // GET: api/values
         [HttpGet]
         public IEnumerable<Circuit> Get()
         {
-            //if(cache == null)
-            //{
-            //    cache = new List<Circuit>(repo.All());
-            //}
             return cache ?? (cache = new List<Circuit>(repo.All()));
         }
 
