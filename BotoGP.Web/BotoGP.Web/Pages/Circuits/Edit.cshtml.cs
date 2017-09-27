@@ -4,15 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BotoGP.Web.Pages
-{
-    public class AboutModel : PageModel
-    {
-        public string Message { get; set; }
+using BotoGP.stateserver.Controllers;
 
-        public void OnGet()
+namespace BotoGP.Web.Pages.Circuits
+{
+    public class EditModel : PageModel
+	{
+		public string Message { get; set; }
+
+		public BotoGP.stateserver.Models.Circuit Circuit { get; set; }
+
+        public void OnGet(string id)
         {
-            Message = "Your application description page.";
+            Circuit = new CircuitController().Get(id);
+            Message = "Your application description page ." + id;
         }
     }
 }

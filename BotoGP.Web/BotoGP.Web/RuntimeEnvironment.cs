@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace BotoGP.Web
 {
-    public static class Environment
+    public static class RuntimeEnvironment
     {
         public static bool IsDevelopment
         {

@@ -72,10 +72,12 @@ BotoGP.designer = {
 
                 var isOfInterest = BotoGP.designer.isPointOfInterest(context, x, y);
                 if (isOfInterest) {
+                    /*
                     pointsOfInterest[type][pointsOfInterest[type].length] = {
                         'x': x,
                         'y': y
                     };
+                    */
                     var h = pointsOfInterest["heat"][y.toString()] || {};
                     h[x.toString()] = type == "on" ? 1 : 0;
                     pointsOfInterest["heat"][y.toString()] = h;
@@ -99,7 +101,6 @@ BotoGP.repo = {
         BotoGP.repo.change(id, { "datamap": datamap });
     },
     change: function (id, changes) {
-        // Rx.DOM.Ajax()
         $.ajax({
             type: "PUT",
             url: "/api/circuits/" + id,
@@ -122,14 +123,8 @@ var circuitModel = {
     "pointsOfInterest": {}
 };
 
+
 var points = [];
-
-// var canvas = document.querySelector("canvas#circuit");
-// var canvasContext = canvas.getContext("2d");
-
-// var previewCanvas = document.querySelector("canvas#preview");
-// var previewCanvasContext = previewCanvas.getContext("2d");
-
 var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
 
 var pointClick$ = clickEvent$.map(function (e) {
