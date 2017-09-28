@@ -1,5 +1,4 @@
-﻿
-import $ from "jquery"
+﻿import $ from "jquery"
 import Rx from "rxjs/Rx"
 
 let BotoGP = window['BotoGP'] || {};
@@ -55,12 +54,11 @@ BotoGP.designer = {
 
         return inpath != context.isPointInStroke(x - 1, y)
             || inpath != context.isPointInStroke(x + 1, y);
-        // || inpath != context.isPointInStroke(x, y - 1)
-        // || inpath != context.isPointInStroke(x, y + 1);
     },
     pointsOfInterest: function (canvas) {
-        if(!canvas)
-        return {};
+        // if(!canvas)
+        // return {};
+
         var context = canvas.getContext("2d");
         var x, y, pointsOfInterest = { "on": [], "off": [], "heat": {} };
         for (y = 0; y < canvas.height; y += 1) {
@@ -72,12 +70,6 @@ BotoGP.designer = {
 
                 var isOfInterest = BotoGP.designer.isPointOfInterest(context, x, y);
                 if (isOfInterest) {
-                    /*
-                    pointsOfInterest[type][pointsOfInterest[type].length] = {
-                        'x': x,
-                        'y': y
-                    };
-                    */
                     var h = pointsOfInterest["heat"][y.toString()] || {};
                     h[x.toString()] = type == "on" ? 1 : 0;
                     pointsOfInterest["heat"][y.toString()] = h;
@@ -102,12 +94,10 @@ BotoGP.repo = {
     },
     change: function (id, changes) {
         $.ajax({
-            type: "PUT",
+            type: "PATCH",
             url: "/api/circuits/" + id,
             contentType: "application/json",
-            data: JSON.stringify({
-                "circuit": changes
-            })
+            data: JSON.stringify(changes)
         }).then(function (d) {
             $('h1.circuit-checkpoints').text(JSON.stringify(d.data.datamap.checkpoints));
         });
@@ -270,20 +260,18 @@ $(document).ready(function () {
     pointClick$.subscribe(function (p) {
 
         var canvas = document.querySelector("canvas#plotter");
-        if(!canvas)
-            return;
+        // if(!canvas) return;
         var canvasContext = canvas.getContext("2d");
 
     var previewCanvas = document.querySelector("canvas#preview");
-    if(!previewCanvas)
-    return;
+    // if(!previewCanvas) return;
 
         canvasContext.clearRect(0, 0, canvas.width * scale, canvas.height * scale);
         canvasContext.translate(0.0, 0.0);
 
         var radius = 1;
         var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
-
+        console.log(pointsOfInterest);
         canvasContext.fillStyle = '#cc0000';
         $.each(pointsOfInterest["off"], function (index, point) {
             canvasContext.beginPath();

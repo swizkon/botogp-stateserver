@@ -8,7 +8,7 @@ namespace BotoGP.stateserver.Models
         [JsonProperty(PropertyName = "id")]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string Name { get; set; } = "Untitled";
+        public string Name { get; set; } // = "Untitled";
 
         public int Width { get; set; } = 150;
 

@@ -71,9 +71,18 @@ namespace BotoGP.stateserver.Controllers
         }
 
         // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(string id, [FromBody]Circuit value)
+        [HttpPatch("{id}")]
+        public Circuit Patch(string id, [FromBody]Circuit value)
         {
+            var c = this.Get(id);
+            
+            if(!string.IsNullOrWhiteSpace(value.Name) )
+                c.Name = value.Name;
+            
+            if(!string.IsNullOrWhiteSpace(value.Checkpoints) )
+                c.Checkpoints = value.Checkpoints;
+
+            return c;
         }
 
         // DELETE api/values/5
