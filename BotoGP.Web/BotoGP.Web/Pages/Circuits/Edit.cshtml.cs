@@ -16,7 +16,7 @@ namespace BotoGP.Web.Pages.Circuits
 
         public void OnGet(string id)
         {
-            Circuit = new CircuitController().Get(id);
+            Circuit = new CircuitsController().Get(id);
             Message = "Your application description page ." + id;
         }
     }

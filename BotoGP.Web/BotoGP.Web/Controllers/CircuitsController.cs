@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BotoGP.stateserver.Controllers
 {
     [Route("api/[controller]")]
-    public class CircuitController : Controller
+    public class CircuitsController : Controller
     {
         private static List<Circuit> cache;
         CircuitRepo repo = new CircuitRepo();

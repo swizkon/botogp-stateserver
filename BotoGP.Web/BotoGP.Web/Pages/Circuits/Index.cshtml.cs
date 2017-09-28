@@ -17,7 +17,7 @@ namespace BotoGP.Web.Pages.Circuits
         public void OnGet()
         {
             Message = System.Guid.NewGuid().ToString();
-            Circuits = new CircuitController().Get();
+            Circuits = new CircuitsController().Get();
         }
     }
 }

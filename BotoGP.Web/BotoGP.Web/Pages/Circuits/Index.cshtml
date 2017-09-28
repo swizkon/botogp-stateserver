@@ -4,68 +4,6 @@
     ViewData["Title"] = "The tracks available";
 }
 
-<div id="circuit-carousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        @for (var i = 1 ; i < Model.Circuits.Count() ; i++)
-        {
-        <li data-target="#myCarousel" data-slide-to="@i"></li>
-		}
-    </ol>
-    <div class="carousel-inner" role="listbox">
-		
-		
-		@foreach (var x in Model.Circuits.Take(1))
-        {
-            <div class="item active">
-
-  <canvas class="circuit-preview" 
-    id="circuit-preview-@x.Id" 
-    width="600" height="400"
-    data-checkpoints="@x.Checkpoints"></canvas>
-			
-                <div class="carousel-caption" role="option">
-    				<h1>@x.Name</h1>
-                    <p>
-                        There are powerful new features in Visual Studio for building modern web apps.
-                        <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                            Learn More
-                        </a>
-                    </p>
-                </div>
-            </div>
-		}
-
-        @foreach (var x in Model.Circuits.Skip(1))
-        {
-            <div class="item">
-
-  <canvas class="circuit-preview" 
-    id="circuit-preview-@x.Id" 
-    width="600" height="400"
-    data-checkpoints="@x.Checkpoints"></canvas>
-                <div class="carousel-caption" role="option">
-                    <h1>@x.Name</h1>
-                    <p>
-                        There are powerful new features in Visual Studio for building modern web apps.
-                        <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                            Learn More
-                        </a>
-                    </p>
-                </div>
-            </div>
-        }
-    </div>
-    <a class="left carousel-control" href="#circuit-carousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#circuit-carousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
-
 <div class="row">
     <div class="col-md-12">
         @foreach (var x in Model.Circuits)
