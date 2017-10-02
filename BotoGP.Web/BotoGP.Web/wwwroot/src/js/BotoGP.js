@@ -204,62 +204,6 @@ $(document).ready(function () {
 
     BotoGP.printer.renderPreviews();
 
-    /*
-    pointClick$.subscribe(function (p) {
-
-        points[points.length] = p;
-        var context = document.querySelector("canvas#preview").getContext("2d");
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.translate(0.0, 0.0);
-
-        context.lineWidth = 80 / scale;
-        context.strokeStyle = "#999";
-        context.beginPath();
-        context.moveTo(points[0].x, points[0].y);
-        var pointIndex;
-        for (pointIndex = 0; pointIndex < points.length; pointIndex++) {
-            context.lineTo(points[pointIndex].x, points[pointIndex].y);
-        }
-        context.closePath();
-        context.lineJoin = 'round';
-        context.stroke();
-
-        context.lineWidth = 60 / scale;
-        context.strokeStyle = "#fff";
-        context.beginPath();
-        context.moveTo(points[0].x, points[0].y);
-        var pointIndex;
-        for (pointIndex = 0; pointIndex < points.length; pointIndex++) {
-            context.lineTo(points[pointIndex].x, points[pointIndex].y);
-        }
-        context.closePath();
-        context.lineJoin = 'round';
-        context.stroke();
-
-    });
-    */
-
-    /*
-    pointClick$.subscribe(function (point) {
-
-        canvasContext.lineTo(point.x, point.y);
-        canvasContext.lineWidth = 9 / scale;
-        canvasContext.strokeStyle = "#ccc";
-        canvasContext.stroke();
-
-        canvasContext.moveTo(point.x, point.y);
-
-        canvasContext.beginPath()
-        canvasContext.arc(point.x, point.y, 9 / scale, 0, 2 * Math.PI, false);
-        canvasContext.fillStyle = '#ccc';
-        canvasContext.fill();
-        canvasContext.strokeStyle = "#ccc";
-        canvasContext.stroke();
-
-        canvasContext.moveTo(point.x, point.y);
-    });
-    */
-
     pointClick$.subscribe(function (p) {
 
         var canvas = document.querySelector("canvas#plotter");
@@ -288,19 +232,6 @@ $(document).ready(function () {
             canvasContext.arc(point.x * scale, point.y * scale, radius, 0, 2 * Math.PI, false);
             canvasContext.fill();
         });
-
-        // circuitModel.checkpoints = points.map(function (p) {
-        //     return [p.x, p.y]
-        // });
-
-        // circuitModel.heat = pointsOfInterest["heat"];
-
-        /*
-        BotoGP.repo.changeDataMap($('h1.circuit-name').data("circuit-id"), {
-            "checkpoints": circuitModel.checkpoints,
-            "heat": circuitModel.heat
-        });
-        */
 
         $('#serialized').text(JSON.stringify(circuitModel));
     });
