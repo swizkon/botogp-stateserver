@@ -56,9 +56,8 @@ BotoGP.designer = {
             || inpath != context.isPointInStroke(x + 1, y);
     },
     pointsOfInterest: function (canvas) {
-        // if(!canvas)
-        // return {};
-
+        if(!canvas) return {};
+        
         var context = canvas.getContext("2d");
         var x, y, pointsOfInterest = { "on": [], "off": [], "heat": {} };
         for (y = 0; y < canvas.height; y += 1) {
@@ -70,6 +69,10 @@ BotoGP.designer = {
 
                 var isOfInterest = BotoGP.designer.isPointOfInterest(context, x, y);
                 if (isOfInterest) {
+                    pointsOfInterest[type][pointsOfInterest[type].length] = {
+                        'x': x,
+                        'y': y
+                    };
                     var h = pointsOfInterest["heat"][y.toString()] || {};
                     h[x.toString()] = type == "on" ? 1 : 0;
                     pointsOfInterest["heat"][y.toString()] = h;
@@ -89,8 +92,8 @@ BotoGP.repo = {
     changeCheckpoints: function (id, checkpoints) {
         BotoGP.repo.change(id, { "checkpoints": checkpoints });
     },
-    changeDatamap: function (id, datamap) {
-        BotoGP.repo.change(id, { "datamap": datamap });
+    changeDataMap: function (id, dataMap) {
+        BotoGP.repo.change(id, { "dataMap": dataMap });
     },
     change: function (id, changes) {
         $.ajax({
@@ -99,7 +102,7 @@ BotoGP.repo = {
             contentType: "application/json",
             data: JSON.stringify(changes)
         }).then(function (d) {
-            $('h1.circuit-checkpoints').text(JSON.stringify(d.data.datamap.checkpoints));
+            $('h1.circuit-checkpoints').text(JSON.stringify(d.dataMap.checkpoints));
         });
     }
 };
@@ -139,14 +142,14 @@ pointsChange$.subscribe(function (value) {
     });
 
     var previewCanvas = document.querySelector("canvas#preview");
-    if(!previewCanvas)
-    return;
+    if(!previewCanvas) return;
+
     var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
     var circuitId = $('h1.circuit-name').data("circuit-id");
     BotoGP.repo.change(circuitId,
         {
             "checkpoints": JSON.stringify(value),
-            "datamap": {
+            "dataMap": {
                 "checkpoints": value,
                 "heat": pointsOfInterest["heat"]
             }
@@ -260,16 +263,16 @@ $(document).ready(function () {
     pointClick$.subscribe(function (p) {
 
         var canvas = document.querySelector("canvas#plotter");
-        // if(!canvas) return;
+        if(!canvas) return;
         var canvasContext = canvas.getContext("2d");
 
-    var previewCanvas = document.querySelector("canvas#preview");
-    // if(!previewCanvas) return;
+        var previewCanvas = document.querySelector("canvas#preview");
+        if(!previewCanvas) return;
 
         canvasContext.clearRect(0, 0, canvas.width * scale, canvas.height * scale);
         canvasContext.translate(0.0, 0.0);
 
-        var radius = 1;
+        var radius = 2;
         var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
         console.log(pointsOfInterest);
         canvasContext.fillStyle = '#cc0000';
@@ -293,7 +296,7 @@ $(document).ready(function () {
         // circuitModel.heat = pointsOfInterest["heat"];
 
         /*
-        BotoGP.repo.changeDatamap($('h1.circuit-name').data("circuit-id"), {
+        BotoGP.repo.changeDataMap($('h1.circuit-name').data("circuit-id"), {
             "checkpoints": circuitModel.checkpoints,
             "heat": circuitModel.heat
         });
@@ -319,7 +322,7 @@ $(document).ready(function () {
     Rx.Observable.fromEvent($('canvas.circuit-preview'), 'click').subscribe(function (e) {
         var scale = e.target.width / BotoGP.DefaultWidth;
         var x = Math.round( e.offsetX / scale), y = Math.round(e.offsetY / scale);
-        $.get("/api/circuits/" + $(e.target).data("circuit-id") + "/tileinfo?x=" + x + "&y=" + y, function (d) {
+        $.get("/api/heatmaps/" + $(e.target).data("circuit-id") + "/tileinfo?x=" + x + "&y=" + y, function (d) {
             $("#hits").text(d);
         }
         );

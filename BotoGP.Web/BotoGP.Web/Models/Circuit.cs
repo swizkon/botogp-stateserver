@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace BotoGP.stateserver.Models
 {
@@ -8,7 +9,7 @@ namespace BotoGP.stateserver.Models
         [JsonProperty(PropertyName = "id")]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string Name { get; set; } // = "Untitled";
+        public string Name { get; set; } = "";
 
         public int Width { get; set; } = 150;
 
@@ -18,7 +19,8 @@ namespace BotoGP.stateserver.Models
 
         public string Checkpoints { get; set; } = "[[150,20],[130,20],[30,50],[50,80],[20,180]]";
 
-		// public string HeatMap { get; set; }
+        public CircuitMap DataMap { get; set; } = new CircuitMap();
+        // = new Dictionary<string,object>();
 
 		public override string ToString()
 		{

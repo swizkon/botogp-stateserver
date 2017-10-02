@@ -1,12 +1,14 @@
-﻿using System;
+﻿
+using System;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace BotoGP.stateserver.Models
 {
-    public class HeatMap
+    public class CheckPoint
     {
-        public IDictionary<string, int> PointsOfInterest { get; set; } = new Dictionary<string, int>();
+        public int x { get; set; }
+
+        public int y { get; set; }
 
         public override string ToString()
         {

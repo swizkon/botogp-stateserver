@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,12 +7,10 @@ using BotoGP.stateserver.Repos;
 using BotoGP.Web;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace BotoGP.stateserver.Controllers
 {
     [Route("api/[controller]")]
-    public class CircuitsController : Controller
+    public class CircuitController : Controller
     {
         private static List<Circuit> cache;
         CircuitRepo repo = new CircuitRepo();
@@ -38,6 +36,13 @@ namespace BotoGP.stateserver.Controllers
                 cache = new List<Circuit>(new[] { leMans, assen }
                 );
             }
+            // Le Mans
+            // 
+
+            // Assen TT
+            // 
+
+
             return cache ?? (cache = new List<Circuit>(repo.All()));
         }
 
@@ -69,10 +74,10 @@ namespace BotoGP.stateserver.Controllers
         {
             var c = this.Get(id);
             
-            if(!string.IsNullOrWhiteSpace(value?.Name) )
+            if(!string.IsNullOrWhiteSpace(value.Name) )
                 c.Name = value.Name;
             
-            if(!string.IsNullOrWhiteSpace(value?.Checkpoints) )
+            if(!string.IsNullOrWhiteSpace(value.Checkpoints) )
                 c.Checkpoints = value.Checkpoints;
             
             if(value.DataMap != null)
