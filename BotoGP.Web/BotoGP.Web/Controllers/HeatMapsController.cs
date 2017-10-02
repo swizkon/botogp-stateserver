@@ -38,7 +38,7 @@ namespace BotoGP.stateserver.Controllers
 
             var heat = Heat(id);
             
-            return findHeat(heat, x-1, y);
+            return findHeat(heat, x, y);
         }
 
         private string findHeat(HeatMap heat, int x, int y)
@@ -46,7 +46,7 @@ namespace BotoGP.stateserver.Controllers
             if(x < 0)
                 return "Miss";
 
-            var key = x + "," + y;
+            var key = new CheckPoint(x: x, y: y);
 
             if(heat.PointsOfInterest.ContainsKey(key))
                 return heat.PointsOfInterest[key] == 1 ?  "Hit" : "Miss";

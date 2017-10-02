@@ -21,8 +21,8 @@ BotoGP.printer = {
 
         var scaledPoints = $.map(points, (o, i) => {
             return {
-                x: o[0] * scale,
-                y: o[1] * scale
+                x: o.x * scale,
+                y: o.y * scale
             }
         });
         var context = canvas.getContext("2d");
@@ -136,7 +136,7 @@ var pointsChange$ = pointClick$.scan(function (acc, value, index) {
 
 pointsChange$.subscribe(console.log);
 
-pointsChange$.subscribe(function (value) {
+pointClick$.subscribe(function (value) {
     $('canvas.circuit-preview, canvas#preview').each((i, m) => {
         BotoGP.printer.drawPreview(m, value);
     });
