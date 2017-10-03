@@ -65,18 +65,24 @@ namespace BotoGP.stateserver.Controllers
 
         // PUT api/values/5
         [HttpPatch("{id}")]
-        public Circuit Patch(string id, [FromBody]Circuit value)
+        public Circuit Patch(string id, [FromBody]UpdateCircuitDto model)
         {
             var c = this.Get(id);
             
-            if(!string.IsNullOrWhiteSpace(value?.Name) )
-                c.Name = value.Name;
+            if(!string.IsNullOrWhiteSpace(model?.Name) )
+                c.Name = model.Name;
             
-            if(!string.IsNullOrWhiteSpace(value?.Checkpoints) )
-                c.Checkpoints = value.Checkpoints;
+            if(model?.CheckPoints != null)
+            {
+                c.Checkpoints = "[" + string.Join(",", model
+                                .CheckPoints
+                                .Select(p => $"[{p.x},{p.y}]")) + "]";
+            }
             
+            /*
             if(value.DataMap != null)
                 c.DataMap = value.DataMap;
+                */
 
             return c;
         }

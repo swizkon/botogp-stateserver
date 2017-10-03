@@ -21,8 +21,8 @@ BotoGP.printer = {
 
         var scaledPoints = $.map(points, (o, i) => {
             return {
-                x: o.x * scale,
-                y: o.y * scale
+                x: o[0] * scale,
+                y: o[1] * scale
             }
         });
         var context = canvas.getContext("2d");
@@ -84,16 +84,29 @@ BotoGP.designer = {
     }
 };
 
-
 BotoGP.repo = {
     changeName: function (id, name) {
         BotoGP.repo.change(id, { "name": name });
     },
+    /*
     changeCheckpoints: function (id, checkpoints) {
         BotoGP.repo.change(id, { "checkpoints": checkpoints });
     },
+    */
     changeDataMap: function (id, dataMap) {
-        BotoGP.repo.change(id, { "dataMap": dataMap });
+        var checkPoints = $.map(dataMap["checkpoints"], (o, i) => {
+            return {
+                x: o[0] * scale,
+                y: o[1] * scale
+            }
+        });
+        var dto = {
+            "checkPoints": checkPoints
+        };
+
+        console.log(checkPoints);
+
+        BotoGP.repo.change(id, dto);
     },
     change: function (id, changes) {
         $.ajax({
@@ -102,6 +115,7 @@ BotoGP.repo = {
             contentType: "application/json",
             data: JSON.stringify(changes)
         }).then(function (d) {
+            // alert(id);
             $('h1.circuit-checkpoints').text(JSON.stringify(d.dataMap.checkpoints));
         });
     }
@@ -115,7 +129,6 @@ var circuitModel = {
     "checkpoints": [],
     "pointsOfInterest": {}
 };
-
 
 var points = [];
 var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
@@ -134,9 +147,7 @@ var pointsChange$ = pointClick$.scan(function (acc, value, index) {
     return acc;
 }, []);
 
-pointsChange$.subscribe(console.log);
-
-pointClick$.subscribe(function (value) {
+pointsChange$.subscribe(function (value) {
     $('canvas.circuit-preview, canvas#preview').each((i, m) => {
         BotoGP.printer.drawPreview(m, value);
     });
@@ -146,9 +157,18 @@ pointClick$.subscribe(function (value) {
 
     var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
     var circuitId = $('h1.circuit-name').data("circuit-id");
+
+    var checkPoints = $.map(value, (o, i) => {
+        return {
+            x: o[0],
+            y: o[1]
+        }
+    });
+
     BotoGP.repo.change(circuitId,
         {
-            "checkpoints": JSON.stringify(value),
+            "name": $('h1.circuit-name').text(),
+            "checkPoints": checkPoints,
             "dataMap": {
                 "checkpoints": value,
                 "heat": pointsOfInterest["heat"]
@@ -160,7 +180,7 @@ pointsChange$.subscribe(function (value) {
     var point = value[value.length - 1];
     var canvas = document.querySelector("canvas#circuit");
     if(!canvas)
-    return;
+        return;
     var canvasContext = canvas.getContext("2d");
     canvasContext.lineTo(point[0], point[1]);
     canvasContext.lineWidth = 9 / scale;
@@ -192,7 +212,6 @@ var nameChange$ = Rx.Observable.fromEvent($('h2 input.circuit-name'), 'keyup')
 
 nameChange$.subscribe(function (d) {
     $('h1.circuit-name').text(d.name);
-    circuitModel.name = d.name; // Redundant?
     BotoGP.repo.changeName(d.id, d.name);
 });
 
@@ -218,7 +237,7 @@ $(document).ready(function () {
 
         var radius = 2;
         var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
-        console.log(pointsOfInterest);
+        // console.log(pointsOfInterest);
         canvasContext.fillStyle = '#cc0000';
         $.each(pointsOfInterest["off"], function (index, point) {
             canvasContext.beginPath();

@@ -3,10 +3,8 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<a class="btn btn-default" href="/circuits">Back</a>
 <h2>@ViewData["Title"]</h2>
-<h3>@Model.Circuit.Name</h3>
-
-<p>Use this area to provide additional information.</p>
 
 <h1 class="circuit-name" data-circuit-id="@Model.Circuit.Id" >@Model.Circuit.Name</h1>
 <h2><input data-circuit-id="@Model.Circuit.Id" class="circuit-name" type="text" value="@Model.Circuit.Name" /></h2>
@@ -16,7 +14,6 @@ class="circuit-checkpoints" type="text" value="@Model.Circuit.Checkpoints" /></h
 
 <hr />
 
-<a class="btn btn-default" href="/circuits">Back</a>
 
 <div class="jumbotron circuit-preview" >
   <canvas data-circuit-id="@Model.Circuit.Id" style="border:solid 1px gray;"
