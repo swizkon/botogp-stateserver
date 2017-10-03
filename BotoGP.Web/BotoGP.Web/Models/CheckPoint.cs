@@ -1,10 +1,9 @@
-﻿
-using System;
+﻿using System;
 using Newtonsoft.Json;
 
 namespace BotoGP.stateserver.Models
 {
-    public class CheckPoint : IEquatable<CheckPoint>
+    public class CheckPoint : IEquatable<CheckPoint>, IComparable<CheckPoint>
     {
         public CheckPoint()
         {
@@ -28,6 +27,11 @@ namespace BotoGP.stateserver.Models
         public bool Equals(CheckPoint other)
         {
             return this.y == other.y && this.x == other.x;
+        }
+
+        public int CompareTo(CheckPoint other)
+        {
+            return (x * 1000 + y).CompareTo(other.x * 1000 + other.y);
         }
     }
 }

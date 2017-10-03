@@ -77,12 +77,19 @@ namespace BotoGP.stateserver.Controllers
                 c.Checkpoints = "[" + string.Join(",", model
                                 .CheckPoints
                                 .Select(p => $"[{p.x},{p.y}]")) + "]";
+
+                c.Map.CheckPoints = model.CheckPoints;
             }
             
-            /*
-            if(value.DataMap != null)
-                c.DataMap = value.DataMap;
-                */
+            if(model?.OnTrack != null)
+            {
+                c.Map.OnTrack = model.OnTrack;
+            }
+            
+            if(model?.OffTrack != null)
+            {
+                c.Map.OffTrack = model.OffTrack;
+            }
 
             return c;
         }

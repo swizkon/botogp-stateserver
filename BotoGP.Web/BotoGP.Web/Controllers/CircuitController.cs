@@ -80,9 +80,6 @@ namespace BotoGP.stateserver.Controllers
             if(!string.IsNullOrWhiteSpace(value.Checkpoints) )
                 c.Checkpoints = value.Checkpoints;
             
-            if(value.DataMap != null)
-                c.DataMap = value.DataMap;
-
             return c;
         }
     }

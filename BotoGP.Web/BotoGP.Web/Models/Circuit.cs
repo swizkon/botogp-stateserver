@@ -17,9 +17,9 @@ namespace BotoGP.stateserver.Models
 
         public int Scale { get; set; } = 5;
 
-        public string Checkpoints { get; set; } // = "[[150,20],[130,20],[30,50],[50,80],[20,180]]";
-
-        public CircuitMap DataMap { get; set; } = new CircuitMap();
+        public string Checkpoints { get; set; }
+        
+        public CircuitMap Map { get; set; } = new CircuitMap();
 
 		public override string ToString()
 		{

@@ -15,9 +15,9 @@ namespace BotoGP.stateserver.Controllers
     [Route("api/[controller]")]
     public class HeatMapsController : Controller
     {
-        private static ConcurrentDictionary<string,string> cache 
-            = new ConcurrentDictionary<string,string>();
-        
+        private static ConcurrentDictionary<string, string> cache
+            = new ConcurrentDictionary<string, string>();
+
         [HttpGet("{id}/tileinfo")]
         public string GetTileInfo(string id, [FromQuery]int x, [FromQuery]int y)
         {
@@ -33,32 +33,48 @@ namespace BotoGP.stateserver.Controllers
 
         private string loadTileInfo(string id, int x, int y)
         {
-            if(x < 0 || y < 0)
+            if (x < 0 || y < 0)
                 return "Miss";
 
             var heat = Heat(id);
-            
+
             return findHeat(heat, x, y);
         }
 
-        private string findHeat(HeatMap heat, int x, int y)
+        private string findHeat(IDictionary<string, int> heat, int x, int y, int retries = 0)
         {
-            if(x < 0)
-                return "Miss";
+            if (x < 0)
+                return "Miss Out of bound after " + retries;
 
-            var key = new CheckPoint(x: x, y: y);
+            var key = buildKey(x,y);
 
-            if(heat.PointsOfInterest.ContainsKey(key))
-                return heat.PointsOfInterest[key] == 1 ?  "Hit" : "Miss";
+            if (heat.ContainsKey(key))
+                return heat[key] == 1 ? "Hit in " + retries : "Miss in " + retries;
 
-            return findHeat(heat, x-1, y);
+            return findHeat(heat, x - 1, y, retries + 1);
         }
 
-        private HeatMap Heat(string id)
+        private IDictionary<string, int> Heat(string id)
         {
             var circuit = new CircuitsController().Get(id);
 
-            return circuit.DataMap.Heat;
+            var heat = new Dictionary<string, int>();
+
+            circuit.Map.OffTrack.ForEach(o =>
+            {
+                heat[buildKey(o.x,o.y)] = 0;
+            });
+            circuit.Map.OnTrack.ForEach(o =>
+            {
+                heat[buildKey(o.x,o.y)] = 1;
+            });
+
+            return heat;
+        }
+
+        private string buildKey(int x, int y)
+        {
+            return "x:" + x + ",y:" + y;
         }
     }
 }

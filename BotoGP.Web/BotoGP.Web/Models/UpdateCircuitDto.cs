@@ -8,7 +8,9 @@ namespace BotoGP.stateserver.Models
         public string Name { get; set; }
         
         public List<CheckPoint> CheckPoints { get; set; }
-        
-        // public CircuitMap DataMap { get; set; } = new CircuitMap();
+
+        public List<CheckPoint> OnTrack { get; set; }
+
+        public List<CheckPoint> OffTrack { get; set; }
     }
 }
