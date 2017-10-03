@@ -59,7 +59,7 @@ BotoGP.designer = {
         if(!canvas) return {};
         
         var context = canvas.getContext("2d");
-        var x, y, pointsOfInterest = { "on": [], "off": [], "heat": {} };
+        var x, y, pointsOfInterest = { "on": [], "off": [], "heat": {}, "points": {} };
         for (y = 0; y < canvas.height; y += 1) {
             for (x = 0; x < canvas.width; x += 1) {
 
@@ -169,10 +169,7 @@ pointsChange$.subscribe(function (value) {
         {
             "name": $('h1.circuit-name').text(),
             "checkPoints": checkPoints,
-            "dataMap": {
-                "checkpoints": value,
-                "heat": pointsOfInterest["heat"]
-            }
+            "pointsOfInterest": pointsOfInterest
         });
 });
 
