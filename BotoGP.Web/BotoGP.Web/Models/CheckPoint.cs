@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace BotoGP.stateserver.Models
 {
-    public class CheckPoint : IEquatable<CheckPoint>, IComparable<CheckPoint>
+    public class CheckPoint
     {
         public CheckPoint()
         {
@@ -22,16 +22,6 @@ namespace BotoGP.stateserver.Models
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
-        }
-
-        public bool Equals(CheckPoint other)
-        {
-            return this.y == other.y && this.x == other.x;
-        }
-
-        public int CompareTo(CheckPoint other)
-        {
-            return (x * 1000 + y).CompareTo(other.x * 1000 + other.y);
         }
     }
 }
