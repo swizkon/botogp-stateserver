@@ -25,14 +25,37 @@ namespace BotoGP.stateserver.Controllers
             {
                 var leMans = new Circuit()
                 {
+                    Id = new Guid("a2cb2c01-e7c3-4f23-8148-85d8e7eb726a"),
                     Name = "Le Mans",
-                    Checkpoints = "[[75,20],[66,23],[41,27],[36,63],[83,74],[102,69],[107,24],[83,31],[76,23]]"
+                    Checkpoints = "[[75,20],[42,73],[86,62],[133,40]]",
+                    Map = new CircuitMap()
+                    {
+                        CheckPoints = new List<CheckPoint>(new []{
+                            new CheckPoint(75, 20),
+                            new CheckPoint(42, 73),
+                            new CheckPoint(86, 62),
+                            new CheckPoint(133, 40)
+                        })
+                    }
                 };
 
                 var assen = new Circuit()
                 {
+                    Id = new Guid("f1c0ce30-23e6-41c2-a7c7-27a468382d73"),
                     Name = "Assen TT",
-                    Checkpoints = "[[75,20],[74,21],[101,72],[56,52],[11,94],[44,88],[18,76],[25,45],[116,53],[130,89]]"
+                    Checkpoints = "[[75,20],[12,16],[40,49],[93,52],[121,74],[122,36],[75,32]]",
+                    Map = new CircuitMap()
+                    {
+                        CheckPoints = new List<CheckPoint>(new []{
+                            new CheckPoint(75, 20),
+                            new CheckPoint(12, 16),
+                            new CheckPoint(40, 49),
+                            new CheckPoint(93, 52),
+                            new CheckPoint(121, 74),
+                            new CheckPoint(122, 36),
+                            new CheckPoint(75,32 )
+                        })
+                    }
                 };
 
                 cache = new List<Circuit>(new[] { leMans, assen }

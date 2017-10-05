@@ -9,78 +9,29 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BotoGP.stateserver.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("graphics/[controller]")]
     public class CircuitController : Controller
     {
-        private static List<Circuit> cache;
-        CircuitRepo repo = new CircuitRepo();
-
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<Circuit> Get()
-        {
-            if (cache == null && RuntimeEnvironment.IsDevelopment)
-            {
-                var leMans = new Circuit()
-                {
-                    Name = "Le Mans",
-                    Checkpoints = "[[75,20],[66,23],[41,27],[36,63],[83,74],[102,69],[107,24],[83,31],[76,23]]"
-                };
-
-                var assen = new Circuit()
-                {
-                    Name = "Assen TT",
-                    Checkpoints = "[[75,20],[74,21],[101,72],[56,52],[11,94],[44,88],[18,76],[25,45],[116,53],[130,89]]"
-                };
-
-                cache = new List<Circuit>(new[] { leMans, assen }
-                );
-            }
-            // Le Mans
-            // 
-
-            // Assen TT
-            // 
-
-
-            return cache ?? (cache = new List<Circuit>(repo.All()));
-        }
-
         // GET api/values/5
-        [HttpGet("{id}")]
-        public Circuit Get(string id)
+        [HttpGet("{id}/svg")]
+        public FileContentResult Svg(string id)
         {
-            return Get().FirstOrDefault(x => x.Id.ToString() == id);
-        }
-
-        // POST api/values
-        [HttpPost]
-        public async void Post([FromQuery]string name)
-        {
-            var c = new Circuit
+            string path = "";
+            var c = new CircuitsController().Get(id);
+            if(c != null)
             {
-                Name = name
-            };
+                path = "M" + string.Join(" L", c.Map.CheckPoints.Select(p => $"{p.x},{p.y}")) + " z";
+            }
 
-            if (!RuntimeEnvironment.IsDevelopment)
-                await repo.CreateIfNotExists(c);
-
-            cache.Add(c);
-        }
-
-        // PUT api/values/5
-        [HttpPatch("{id}")]
-        public Circuit Patch(string id, [FromBody]Circuit value)
-        {
-            var c = this.Get(id);
-            
-            if(!string.IsNullOrWhiteSpace(value.Name) )
-                c.Name = value.Name;
-            
-            if(!string.IsNullOrWhiteSpace(value.Checkpoints) )
-                c.Checkpoints = value.Checkpoints;
-            
-            return c;
+            var data = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""no""?>
+<!DOCTYPE svg PUBLIC ""-//W3C//DTD SVG 1.1//EN"" ""http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"">
+<svg xmlns=""http://www.w3.org/2000/svg"" width=""150px"" height=""100px"" viewBox=""0 0 150 100"" preserveAspectRatio=""xMidYMid meet"">
+    <title>Circuit</title>
+    <g id=""main"">
+        <path stroke=""#51287a"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""15"" fill=""transparent"" d=""" + path + @""" />
+    </g>
+</svg>";
+            return new FileContentResult(System.Text.Encoding.UTF8.GetBytes(data), "image/svg+xml");
         }
     }
 }

@@ -19,18 +19,19 @@
         @foreach (var x in Model.Circuits.Take(1))
         {
             <div class="item active">
-
-  <canvas class="circuit-preview" 
+                
+                <img class="circuit" alt="@x.Name" src="/graphics/circuit/@x.Id/svg" />
+                
+  <!-- canvas class="circuit-preview" 
     id="circuit-preview-@x.Id" 
     width="600" height="400"
-    data-checkpoints="@x.Checkpoints"></canvas>
-            
+    data-checkpoints="@x.Checkpoints"></canvas -->
+
                 <div class="carousel-caption" role="option">
                     <h1>@x.Name</h1>
                     <p>
-                        There are powerful new features in Visual Studio for building modern web apps.
                         <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                            Learn More
+                            Practi
                         </a>
                     </p>
                 </div>
@@ -41,14 +42,16 @@
         {
             <div class="item">
 
-  <canvas class="circuit-preview" 
+                <img class="circuit" alt="@x.Name" src="/graphics/circuit/@x.Id/svg" />
+
+  <!-- canvas class="circuit-preview" 
     id="circuit-preview-@x.Id" 
     width="600" height="400"
-    data-checkpoints="@x.Checkpoints"></canvas>
+    data-checkpoints="@x.Checkpoints"></canvas -->
+    
                 <div class="carousel-caption" role="option">
                     <h1>@x.Name</h1>
                     <p>
-                        There are powerful new features in Visual Studio for building modern web apps.
                         <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
                             Learn More
                         </a>
