@@ -15,5 +15,10 @@ namespace BotoGP.Hubs
         {
             return Clients.All.InvokeAsync("Move", coords);
         }
+
+        public Task CrashInfo(string racer)
+        {
+            return Clients.All.InvokeAsync("Crash", racer);
+        }
     }
 }

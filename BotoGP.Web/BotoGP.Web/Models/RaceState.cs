@@ -3,6 +3,7 @@
     public class RaceState
 	{
 		public string RiderId { get; set; }
+		
 		public string RiderKey { get; set; }
 
 		public int ForceX { get; set; }
