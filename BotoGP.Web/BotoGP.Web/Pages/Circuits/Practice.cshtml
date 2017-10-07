@@ -1,0 +1,59 @@
+﻿@page
+@model PracticeModel
+@{
+    ViewData["Title"] = "Practice";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@Model.Message</h3>
+
+
+<div class="row">
+	<div class="col-md-8">
+
+<div class="jumbotron circuit-preview">
+
+
+	<table class="pull-right">
+		<tr>
+			<td><a href="#" class="btn btn-default btn-large">&nwarr;</a></td>
+			<td><a href="#" class="btn btn-default btn-large">&uarr;</a></td>
+			<td><a href="#" class="btn btn-default btn-large">&nearr;</a></td>
+		</tr>
+		<tr>
+			<td><a href="#" class="btn btn-default btn-large">&larr;</a></td>
+			<td><a href="#" class="btn btn-default btn-large">X</a></td>
+			<td><a href="#" class="btn btn-default btn-large">&rarr;</a></td>
+		</tr>
+		<tr>
+			<td><a href="#" class="btn btn-default btn-large">&swarr;</a></td>
+			<td><a href="#" class="btn btn-default btn-large">&darr;</a></td>
+			<td><a href="#" class="btn btn-default btn-large">&searr;</a></td>
+		</tr>
+	</table>
+    
+  <canvas style="border:solid 1px gray;"
+    class="circuit-preview pull-left" 
+    id="circuit-preview-@Model.Circuit.Id" 
+    width="600" height="400" 
+    data-scale="2"
+    data-checkpoints="@Model.Circuit.Checkpoints"></canvas>
+</div>
+
+	</div>
+</div>
+
+<hr />
+<div id="state">
+Loading state...
+</div>
+<hr />
+
+				<canvas id="circuit" width="150" height="100" style="border:solid 1px white;"></canvas>
+				<canvas id="preview" width="150" height="100" style="border:solid 1px white;"></canvas>
+				<svg id="preview" width="150" height="100" xmlns="http://www.w3c.org.200/svg" style="border:solid 1px white;">
+					<circle id="circle1" cx="25" cy="75" r="5" stroke="#00ff00" fill="#fff" stroke-width="2" style="opacity: 0.8;" />
+				</svg>
+				<canvas id="plotter" width="150" height="100" style="border:solid 1px white;"></canvas>
+
+<div id="hits" style="border:solid 1px white;width:150px;height:100px"></div>
+				
