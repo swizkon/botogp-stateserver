@@ -49,8 +49,8 @@ BotoGP.designer = {
     isPointOfInterest: function (context, x, y) {
         var inpath = context.isPointInStroke(x, y);
 
-        return inpath != context.isPointInStroke(x - 1, y)
-            || inpath != context.isPointInStroke(x + 1, y);
+        return inpath != context.isPointInStroke(x - 1, y);
+         //   || inpath != context.isPointInStroke(x + 1, y);
     },
     pointsOfInterest: function (canvas) {
         if(!canvas) return {};
@@ -144,7 +144,7 @@ pointsChange$.subscribe(function (value) {
     if(!previewCanvas) return;
 
     var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
-    var circuitId = $('h1.circuit-name').data("circuit-id");
+    var circuitId = $(previewCanvas).data("circuit-id");
 
     var checkPoints = $.map(value, (o, i) => {
         return {

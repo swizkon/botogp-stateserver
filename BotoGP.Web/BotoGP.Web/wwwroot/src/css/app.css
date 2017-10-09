@@ -37,6 +37,10 @@ img.circuit{
     height:400px;
 }
 
+canvas {
+    border:solid 1px white;
+}
+
 @media screen and (max-width: 480px) {
 body, div.jumbotron
 {
