@@ -118,7 +118,8 @@ var circuitModel = {
     "pointsOfInterest": {}
 };
 
-var points = [];
+// var points = [];
+
 var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
 
 var pointClick$ = clickEvent$.map(function (e) {
@@ -147,10 +148,7 @@ pointsChange$.subscribe(function (value) {
     var circuitId = $(previewCanvas).data("circuit-id");
 
     var checkPoints = $.map(value, (o, i) => {
-        return {
-            x: o[0],
-            y: o[1]
-        }
+        return { x: o[0], y: o[1] }
     });
 
     BotoGP.repo.change(circuitId,
