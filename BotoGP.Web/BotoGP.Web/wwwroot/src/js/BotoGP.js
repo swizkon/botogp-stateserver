@@ -14,11 +14,8 @@ BotoGP.printer = {
             BotoGP.printer.drawPreview(m, points);
         });
     },
-
     drawPreview: function (canvas, points) {
-
         var scale = canvas.width / BotoGP.DefaultWidth;
-
         var scaledPoints = $.map(points, (o, i) => {
             return {
                 x: o[0] * scale,
@@ -79,7 +76,7 @@ BotoGP.designer = {
                 }
             }
         }
-        // Delete every heat
+        
         return pointsOfInterest;
     }
 };
@@ -88,11 +85,6 @@ BotoGP.repo = {
     changeName: function (id, name) {
         BotoGP.repo.change(id, { "name": name });
     },
-    /*
-    changeCheckpoints: function (id, checkpoints) {
-        BotoGP.repo.change(id, { "checkpoints": checkpoints });
-    },
-    */
     changeDataMap: function (id, dataMap) {
         var checkPoints = $.map(dataMap["checkpoints"], (o, i) => {
             return {
@@ -103,19 +95,15 @@ BotoGP.repo = {
         var dto = {
             "checkPoints": checkPoints
         };
-
-        console.log(checkPoints);
-
         BotoGP.repo.change(id, dto);
     },
     change: function (id, changes) {
         $.ajax({
-            type: "PATCH",
+            type: "POST",
             url: "/api/circuits/" + id,
             contentType: "application/json",
             data: JSON.stringify(changes)
         }).then(function (d) {
-            // alert(id);
             $('h1.circuit-checkpoints').text(JSON.stringify(d.dataMap.checkpoints));
         });
     }
@@ -209,7 +197,6 @@ var nameChange$ = Rx.Observable.fromEvent($('h2 input.circuit-name'), 'keyup')
     });
 
 nameChange$.subscribe(function (d) {
-    $('h1.circuit-name').text(d.name);
     BotoGP.repo.changeName(d.id, d.name);
 });
 
@@ -235,7 +222,6 @@ $(document).ready(function () {
 
         var radius = 2;
         var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
-        // console.log(pointsOfInterest);
         canvasContext.fillStyle = '#cc0000';
         $.each(pointsOfInterest["off"], function (index, point) {
             canvasContext.beginPath();
@@ -252,8 +238,6 @@ $(document).ready(function () {
 
         $('#serialized').text(JSON.stringify(circuitModel));
     });
-
-
 
     Rx.Observable.fromEvent($('canvas.circuit-preview'), 'mousemove').subscribe(function (e) {
 

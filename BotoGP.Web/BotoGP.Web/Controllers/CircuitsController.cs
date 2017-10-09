@@ -86,9 +86,8 @@ namespace BotoGP.stateserver.Controllers
             cache.Add(c);
         }
 
-        // PUT api/values/5
-        [HttpPatch("{id}")]
-        public Circuit Patch(string id, [FromBody]UpdateCircuitDto model)
+        [HttpPost("{id}")]
+        public Circuit Post(string id, [FromBody]UpdateCircuitDto model)
         {
             var c = this.Get(id);
             
