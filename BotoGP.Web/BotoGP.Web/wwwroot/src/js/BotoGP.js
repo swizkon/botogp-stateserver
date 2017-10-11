@@ -1,6 +1,8 @@
 ﻿import $ from "jquery"
 import Rx from "rxjs/Rx"
 
+import BrowserUtil from "./BrowserUtil"
+
 let BotoGP = window['BotoGP'] || {};
 
 BotoGP.DefaultWidth = 150;
@@ -50,7 +52,7 @@ BotoGP.designer = {
         var inpath = context.isPointInStroke(x, y);
 
         return inpath != context.isPointInStroke(x - 1, y);
-         //   || inpath != context.isPointInStroke(x + 1, y);
+        // || inpath != context.isPointInStroke(x + 1, y);
     },
     pointsOfInterest: function (canvas) {
         if(!canvas) return {};
@@ -204,6 +206,13 @@ var scale = 4;
 
 $(document).ready(function () {
 
+    let id = BrowserUtil.getQueryParameter("id");
+    if(id) {
+        var url = `/api/circuits/${id}?only=minimal`
+        $.getJSON(url, );
+    }
+    // alert(id);
+
     BotoGP.printer.renderPreviews();
 
     pointClick$.subscribe(function (p) {
@@ -233,8 +242,7 @@ $(document).ready(function () {
             canvasContext.arc(point.x * scale, point.y * scale, radius, 0, 2 * Math.PI, false);
             canvasContext.fill();
         });
-
-        $('#serialized').text(JSON.stringify(circuitModel));
+        
     });
 
     Rx.Observable.fromEvent($('canvas.circuit-preview'), 'mousemove').subscribe(function (e) {

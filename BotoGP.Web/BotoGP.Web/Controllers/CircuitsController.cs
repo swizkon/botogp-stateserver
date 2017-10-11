@@ -58,8 +58,7 @@ namespace BotoGP.stateserver.Controllers
                     }
                 };
 
-                cache = new List<Circuit>(new[] { leMans, assen }
-                );
+                cache = new List<Circuit>(new[] { leMans, assen });
             }
             return cache ?? (cache = new List<Circuit>(repo.All()));
         }
