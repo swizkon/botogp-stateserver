@@ -123,10 +123,22 @@ var circuitModel = {
 */
 // var points = [];
 
+var racerState = {
+    "x": 0,
+    "y": 0,
+    "forceX": 0,
+    "forceY": 0
+};
 
 let load$ = new Rx.Subject();
 load$.subscribe((x) => {
     $('h3').text(x.name);
+});
+
+
+var vertical$ = Rx.Observable.fromEvent($('button'), 'click');
+vertical$.subscribe(x => {
+    $('#state').text(JSON.stringify(racerState) + ' at ' +  new Date());
 });
 
 var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
