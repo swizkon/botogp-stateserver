@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Practice";
 }
-<h3>@ViewData["Title"] @Model.Message</h3>
+<h3>Loading data...</h3>
 
 <div class="row">
 	<div class="col-md-4">
@@ -14,7 +14,7 @@
                     <td><a href="#" class="btn btn-default btn-large">&nearr;</a></td>
                 </tr>
                 <tr>
-                    <td><a href="#" class="btn btn-default btn-large">&larr;</a></td>
+                    <td><button class="btn btn-default btn-large">&larr;</button></td>
                     <td><a href="#" class="btn btn-default btn-large">X</a></td>
                     <td><a href="#" class="btn btn-default btn-large">&rarr;</a></td>
                 </tr>
@@ -35,7 +35,6 @@
 
 <div class="row">
 	<div class="col-md-8">
-        <!-- img class="circuit" alt="Le Mans" src="/graphics/circuit/@Model.Circuit.Id/svg" / -->
         <canvas style="border:solid 1px gray;"
             class="circuit-preview" 
             id="circuit-preview-@Model.Circuit.Id" 
@@ -43,11 +42,10 @@
             data-checkpoints="@Model.Circuit.Checkpoints"></canvas>
 	</div>
 </div>
-
-
-<canvas id="preview" width="150" height="100" style="border:solid 1px white;"></canvas>
-<svg id="preview" width="150" height="100" xmlns="http://www.w3c.org.200/svg" style="border:solid 1px white;width:600px;">
+<svg id="" width="300" height="200" xmlns="http://www.w3c.org.200/svg" style="border:solid 1px white;background-image:url(/graphics/circuit/@Model.Circuit.Id/svg?scale=2);">
     <circle id="circle1" cx="25" cy="75" r="5" stroke="#00ff00" fill="#fff" stroke-width="2" style="opacity: 0.8;" />
 </svg>
+
 <div id="hits" style="border:solid 1px white;width:150px;height:100px"></div>
 				
+<canvas id="preview" width="150" height="100" style="border:solid 1px white;"></canvas>

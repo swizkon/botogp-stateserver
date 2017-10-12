@@ -8,7 +8,7 @@ let BotoGP = window['BotoGP'] || {};
 BotoGP.DefaultWidth = 150;
 BotoGP.DefaultHeight = 100;
 
-BotoGP.printer = { 
+BotoGP.printer = {
 
     renderPreviews: function () {
         $('canvas.circuit-preview').each((i, m) => {
@@ -55,10 +55,10 @@ BotoGP.designer = {
         // || inpath != context.isPointInStroke(x + 1, y);
     },
     pointsOfInterest: function (canvas) {
-        if(!canvas) return {};
-        
+        if (!canvas) return {};
+
         var context = canvas.getContext("2d");
-        var x, y, pointsOfInterest = { "on": [], "off": [], "heat": {}};
+        var x, y, pointsOfInterest = { "on": [], "off": [], "heat": {} };
         for (y = 0; y < canvas.height; y += 1) {
             for (x = 0; x < canvas.width; x += 1) {
 
@@ -78,7 +78,7 @@ BotoGP.designer = {
                 }
             }
         }
-        
+
         return pointsOfInterest;
     }
 };
@@ -111,6 +111,7 @@ BotoGP.repo = {
     }
 };
 
+/*
 var circuitModel = {
     "name": "Default track",
     "width": 150,
@@ -119,8 +120,14 @@ var circuitModel = {
     "checkpoints": [],
     "pointsOfInterest": {}
 };
-
+*/
 // var points = [];
+
+
+let load$ = new Rx.Subject();
+load$.subscribe((x) => {
+    $('h3').text(x.name);
+});
 
 var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
 
@@ -144,7 +151,7 @@ pointsChange$.subscribe(function (value) {
     });
 
     var previewCanvas = document.querySelector("canvas#preview");
-    if(!previewCanvas) return;
+    if (!previewCanvas) return;
 
     var pointsOfInterest = BotoGP.designer.pointsOfInterest(previewCanvas);
     var circuitId = $(previewCanvas).data("circuit-id");
@@ -165,7 +172,7 @@ pointsChange$.subscribe(function (value) {
 pointsChange$.subscribe(function (value) {
     var point = value[value.length - 1];
     var canvas = document.querySelector("canvas#circuit");
-    if(!canvas)
+    if (!canvas)
         return;
     var canvasContext = canvas.getContext("2d");
     canvasContext.lineTo(point[0], point[1]);
@@ -207,22 +214,24 @@ var scale = 4;
 $(document).ready(function () {
 
     let id = BrowserUtil.getQueryParameter("id");
-    if(id) {
-        var url = `/api/circuits/${id}?only=minimal`
-        $.getJSON(url, );
+
+    var url = `/api/circuits/${id}?only=minimal`
+
+    if (id) {
+        Rx.Observable.fromPromise($.getJSON(url)).subscribe(load$);
+        $('body').attr('data-circuit-id', id);
     }
-    // alert(id);
 
     BotoGP.printer.renderPreviews();
 
     pointClick$.subscribe(function (p) {
 
         var canvas = document.querySelector("canvas#plotter");
-        if(!canvas) return;
+        if (!canvas) return;
         var canvasContext = canvas.getContext("2d");
 
         var previewCanvas = document.querySelector("canvas#preview");
-        if(!previewCanvas) return;
+        if (!previewCanvas) return;
 
         canvasContext.clearRect(0, 0, canvas.width * scale, canvas.height * scale);
         canvasContext.translate(0.0, 0.0);
@@ -242,25 +251,25 @@ $(document).ready(function () {
             canvasContext.arc(point.x * scale, point.y * scale, radius, 0, 2 * Math.PI, false);
             canvasContext.fill();
         });
-        
+
     });
 
     Rx.Observable.fromEvent($('canvas.circuit-preview'), 'mousemove').subscribe(function (e) {
 
-        var scale = e.target.width / BotoGP.DefaultWidth;
-        
+        var scale = e.target.width / $('svg').attr('width');
+
         var x = e.offsetX, y = e.offsetY;
-        $('#circle1').attr('cy', y / scale);
-        $('#circle1').attr('cx', x / scale);
+        $('svg #circle1').attr('cy', y / scale);
+        $('svg #circle1').attr('cx', x / scale);
 
         var inpath = e.target.getContext("2d").isPointInStroke(x, y);
-        $('#circle1').attr('stroke', inpath ? '#00ff00' : '#ff0000');
+        $('svg #circle1').attr('stroke', inpath ? '#00ff00' : '#ff0000');
     });
-    
+
     Rx.Observable.fromEvent($('canvas.circuit-preview'), 'click').subscribe(function (e) {
         var scale = e.target.width / BotoGP.DefaultWidth;
-        var x = Math.round( e.offsetX / scale), y = Math.round(e.offsetY / scale);
-        $.get("/api/heatmaps/" + $(e.target).data("circuit-id") + "/tileinfo?x=" + x + "&y=" + y, function (d) {
+        var x = Math.round(e.offsetX / scale), y = Math.round(e.offsetY / scale);
+        $.get("/api/heatmaps/" + $('body').data("circuit-id") + "/tileinfo?x=" + x + "&y=" + y, function (d) {
             $("#hits").text(d);
         }
         );

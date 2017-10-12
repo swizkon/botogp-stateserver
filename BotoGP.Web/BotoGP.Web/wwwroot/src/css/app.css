@@ -32,14 +32,18 @@ h1 small {
     font-weight: 100;
 }
 
+/*
 img.circuit{
     width:600px;
     height:400px;
 }
+*/
 
+/*
 canvas {
-    border:solid 1px white;
+    border:solid 1px rgb(109, 105, 105);
 }
+*/
 
 @media screen and (max-width: 480px) {
 body, div.jumbotron
