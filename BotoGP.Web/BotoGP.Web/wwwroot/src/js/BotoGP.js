@@ -124,21 +124,39 @@ var circuitModel = {
 // var points = [];
 
 var racerState = {
-    "x": 0,
-    "y": 0,
+    "x": 150,
+    "y": 20,
     "forceX": 0,
     "forceY": 0
 };
 
 let load$ = new Rx.Subject();
+
 load$.subscribe((x) => {
     $('h3').text(x.name);
 });
 
+var stateChange$ = Rx.Observable.fromEvent($('button.state-change'), 'click')
+    .map(e => {
+        return {
+            'x': parseInt($(e.target).data('x')),
+            'y': parseInt($(e.target).data('y'))
+        }
+    })
+    .startWith({ "x": 0, "y": 0 })
+    .scan(function (acc, value, index) {
+        var forceX = acc.forceX + value.x;
+        var forceY = acc.forceY + value.y;
+        return {
+            "x": acc.x + forceX,
+            "y": acc.y + forceY,
+            "forceX": forceX,
+            "forceY": forceY
+        };
+    }, { "x": 150, "y": 20, "forceX": 0, "forceY": 0 });
 
-var vertical$ = Rx.Observable.fromEvent($('button'), 'click');
-vertical$.subscribe(x => {
-    $('#state').text(JSON.stringify(racerState) + ' at ' +  new Date());
+stateChange$.subscribe(x => {
+    $('#state').text(JSON.stringify(x) + ' at ' + new Date());
 });
 
 var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
