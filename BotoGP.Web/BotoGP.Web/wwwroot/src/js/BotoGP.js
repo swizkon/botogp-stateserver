@@ -153,10 +153,14 @@ var stateChange$ = Rx.Observable.fromEvent($('button.state-change'), 'click')
             "forceX": forceX,
             "forceY": forceY
         };
-    }, { "x": 150, "y": 20, "forceX": 0, "forceY": 0 });
+    }, { "x": 75, "y": 20, "forceX": 0, "forceY": 0 });
 
-stateChange$.subscribe(x => {
-    $('#state').text(JSON.stringify(x) + ' at ' + new Date());
+stateChange$.subscribe(value => {
+    $('#state').text(JSON.stringify(value) + ' at ' + new Date());
+
+    var stateCircle = $('#state-circle')
+    stateCircle.attr('cy', value.y)
+    stateCircle.attr('cx', value.x)
 });
 
 var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
