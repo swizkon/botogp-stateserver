@@ -7,3 +7,5 @@
 // import socket from "./socket"
 
 import BotoGP from "./BotoGP"
+
+import HubTest from "./HubTest"

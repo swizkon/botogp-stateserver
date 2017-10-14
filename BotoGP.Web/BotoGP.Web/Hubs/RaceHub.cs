@@ -11,9 +11,9 @@ namespace BotoGP.Hubs
             return Clients.All.InvokeAsync("Send", message);
         }
 
-        public Task Move(string coords)
+        public Task Move(string racer, int x, int y)
         {
-            return Clients.All.InvokeAsync("Move", coords);
+            return Clients.All.InvokeAsync("Move", racer, x, y);
         }
 
         public Task CrashInfo(string racer)

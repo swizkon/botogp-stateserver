@@ -1,0 +1,60 @@
+@page
+@model HubTestModel
+@{
+    ViewData["Title"] = "Hub Test";
+}
+
+<h3>Loading data...</h3>
+
+<svg id="state" width="150" height="100" xmlns="http://www.w3c.org.200/svg" style="border:solid 1px white;background-image:url(/graphics/circuit/@Model.Circuit.Id/svg?scale=1);">
+    <circle id="racer-default" cx="75" cy="20" r="3" stroke="#006600" fill="#fff" stroke-width="2" style="opacity: 0.8;" />
+</svg>
+
+<canvas style="border:solid 1px gray;"
+            class="circuit-tracer" 
+            id="circuit-tracer"
+            width="600" height="400"></canvas>
+            
+@section Scripts {
+    <script type="text/javascript">   
+    /*
+    var mousetrack = function(coords){
+        console.log(coords);
+    };
+    
+    var maxRate = Rx.Observable.timer(0, 100);
+    var source = Rx.Observable.fromEvent(document, 'mousemove');
+
+    var subscription = source.sample(maxRate).subscribe(function (e) {
+        mousetrack(e.clientX + ', ' + e.clientY);
+    });
+
+    var connection;
+    $(document).ready(function(){
+        connection = new signalR.HubConnection('/race');
+
+        connection.on('send', data => {
+            console.log(data);
+        });
+
+        connection.on('move', data => {
+            $('h2').text(data);
+        });
+
+        connection.start()
+                .then(() => {
+                    connection.invoke('send', 'Hello');
+                    mousetrack = function(arg){
+
+                        connection.invoke("move", arg);
+                    };
+                });
+
+        $('body').click(function(e){
+            var coords = "x: " + e.offsetX + ", y: " + e.offsetY;
+            connection.invoke("move", coords);
+        });
+    });
+    */
+    </script>
+}

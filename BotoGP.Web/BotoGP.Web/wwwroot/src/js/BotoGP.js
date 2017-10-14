@@ -143,7 +143,7 @@ var stateChange$ = Rx.Observable.fromEvent($('button.state-change'), 'click')
             'y': parseInt($(e.target).data('y'))
         }
     })
-    .startWith({ "x": 0, "y": 0 })
+    // .startWith({ "x": 0, "y": 0 })
     .scan(function (acc, value, index) {
         var forceX = acc.forceX + value.x;
         var forceY = acc.forceY + value.y;
