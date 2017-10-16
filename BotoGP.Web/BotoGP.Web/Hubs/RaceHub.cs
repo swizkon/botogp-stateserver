@@ -20,5 +20,19 @@ namespace BotoGP.Hubs
         {
             return Clients.All.InvokeAsync("Crash", racer);
         }
+
+/*
+
+
+        public void JoinRace(string raceId)
+        {
+            this.Groups.AddAsync(this.Context.ConnectionId, raceId);
+        }
+
+        public Task LeaveRace(string raceId)
+        {
+            return Groups.RemoveAsync(Context.ConnectionId, raceId);
+        }
+*/
     }
 }
