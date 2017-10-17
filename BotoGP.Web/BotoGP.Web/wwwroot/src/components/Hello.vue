@@ -2,7 +2,12 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
 
-    <h3 v-for="item in items">{{item.name}}</h3>
+
+
+    <h3 v-for="item in items">{{item.name}}
+    
+    <router-link :to="{ name: 'CircuitDetails', params: { circuitid: item.id }}">{{item.name}}</router-link>
+    </h3>
   </div>
 </template>
 
