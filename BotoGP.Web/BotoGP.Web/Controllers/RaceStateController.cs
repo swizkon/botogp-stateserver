@@ -59,7 +59,7 @@ namespace BotoGP.stateserver.Controllers
                 Update(racer.RiderId, racer.RiderKey, racer);
             }
 			
-			_hubContext.Clients.All.InvokeAsync("move", "racer-move", x, y);
+			_hubContext.Clients.All.InvokeAsync("Move", "racer-move", x, y);
         }
 
         // PUT api/racestate/race-123/rider-1
