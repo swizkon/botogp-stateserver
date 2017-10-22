@@ -1,13 +1,12 @@
 <template>
   <div class="hello">
     <h2>{{ msg }}</h2>
-
-
-
-    <h3 v-for="item in items">{{item.name}}
-    
-    <router-link :to="{ name: 'CircuitDetails', params: { circuitid: item.id }}">{{item.name}}</router-link>
-    </h3>
+    <div v-for="item in items">
+        <h1>{{ item.name }}</h1>
+        <router-link :to="{ name: 'CircuitDetails', params: { circuitid: item.id }}">
+          <img :src="item.thumb" />
+        </router-link>
+    </div>
   </div>
 </template>
 
@@ -15,20 +14,24 @@
   export default {
     name: 'hello',
     data() { 
+      var a = "DA stuffxcxc"
       return {
-        msg: 'Welcome to 5001 Vue.js App, bundled with Brunch!',
+        msg: `Nice ${a}`,
         items: []
       }
     },
 
     created () {
-      // this.fetchData()
       var _this = this;
         $.getJSON('/api/circuits', function (json) {
-            _this.items = json;
-        });
+            _this.items = $.map(json, (o, i) => {
+                        return {
+                            "name": o.name,
+                            "id": o.id,
+                            "thumb": `/graphics/circuit/${o.id}/svg?scale=2`
+                        }
+                    })
+        })
     }
-
-  
   }
 </script>

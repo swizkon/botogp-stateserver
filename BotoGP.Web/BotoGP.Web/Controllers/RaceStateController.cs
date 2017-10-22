@@ -25,7 +25,6 @@ namespace BotoGP.stateserver.Controllers
             _hubContext = hubContext;
         }
 
-        // GET api/racestate/race-123
         [HttpGet]
         public IEnumerable<RaceState> Get()
         {
@@ -33,7 +32,6 @@ namespace BotoGP.stateserver.Controllers
             return race;
         }
 
-        // GET api/racestate/race-123/rider-1
         [HttpGet("{id}")]
         public RaceState Get(string id)
         {
@@ -41,7 +39,6 @@ namespace BotoGP.stateserver.Controllers
             return race?.FirstOrDefault(x => x.RiderId == id);
         }
 
-        // POST api/values
         [HttpPost("{id}")]
         public void Post(string id,
                          [FromQuery]string key,
@@ -62,16 +59,13 @@ namespace BotoGP.stateserver.Controllers
 			_hubContext.Clients.All.InvokeAsync("Move", "racer-move", x, y);
         }
 
-        // PUT api/racestate/race-123/rider-1
         [HttpPut("{id}")]
         public void Put(string id, [FromQuery]string key)
         {
-            // Some code that resets the state 
             var state = new RaceState { RiderId = id, RiderKey = key };
             Update(id, key, state);
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

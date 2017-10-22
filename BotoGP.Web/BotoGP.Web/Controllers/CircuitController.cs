@@ -12,6 +12,13 @@ namespace BotoGP.stateserver.Controllers
     [Route("graphics/[controller]")]
     public class CircuitController : Controller
     {
+        [HttpGet("{id}/heatmap")]
+        public CircuitMap GetHeatMap(string id)
+        {
+            var c = new CircuitsController().Get(id);
+            return c?.Map;
+        }
+
         // GET api/values/5
         [HttpGet("{id}/svg")]
         public FileContentResult Svg(string id, int scale = 1)

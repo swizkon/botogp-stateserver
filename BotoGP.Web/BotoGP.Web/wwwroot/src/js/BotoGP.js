@@ -1,5 +1,14 @@
 ﻿import $ from "jquery"
-import Rx from "rxjs/Rx"
+
+import {Observable} from "rxjs/Observable"
+import {Subject} from "rxjs/Subject"
+
+import 'rxjs/add/observable/fromEvent'
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/scan'
+import 'rxjs/add/operator/startWith'
+import 'rxjs/add/operator/debounceTime'
+import 'rxjs/add/operator/distinctUntilChanged'
 
 import BrowserUtil from "./BrowserUtil"
 
@@ -130,20 +139,19 @@ var racerState = {
     "forceY": 0
 };
 
-let load$ = new Rx.Subject();
+let load$ = new Subject();
 
 load$.subscribe((x) => {
     $('h3').text(x.name);
 });
 
-var stateChange$ = Rx.Observable.fromEvent($('button.state-change'), 'click')
+var stateChange$ = Observable.fromEvent($('button.state-change'), 'click')
     .map(e => {
         return {
             'x': parseInt($(e.target).data('x')),
             'y': parseInt($(e.target).data('y'))
         }
     })
-    // .startWith({ "x": 0, "y": 0 })
     .scan(function (acc, value, index) {
         var forceX = acc.forceX + value.x;
         var forceY = acc.forceY + value.y;
@@ -163,7 +171,7 @@ stateChange$.subscribe(value => {
     stateCircle.attr('cx', value.x)
 });
 
-var clickEvent$ = Rx.Observable.fromEvent($('canvas#circuit'), 'click');
+var clickEvent$ = Observable.fromEvent($('canvas#circuit'), 'click');
 
 var pointClick$ = clickEvent$.map(function (e) {
     return {
@@ -227,7 +235,7 @@ pointsChange$.subscribe(function (value) {
 });
 
 
-var nameChange$ = Rx.Observable.fromEvent($('h2 input.circuit-name'), 'keyup')
+var nameChange$ = Observable.fromEvent($('h2 input.circuit-name'), 'keyup')
     .debounceTime(500)
     .distinctUntilChanged()
     .map(function (e) {
@@ -252,7 +260,7 @@ $(document).ready(function () {
     var url = `/api/circuits/${id}?only=minimal`
 
     if (id) {
-        Rx.Observable.fromPromise($.getJSON(url)).subscribe(load$);
+        Observable.fromPromise($.getJSON(url)).subscribe(load$);
         $('body').attr('data-circuit-id', id);
     }
 
@@ -288,7 +296,7 @@ $(document).ready(function () {
 
     });
 
-    Rx.Observable.fromEvent($('canvas.circuit-preview'), 'mousemove').subscribe(function (e) {
+    Observable.fromEvent($('canvas.circuit-preview'), 'mousemove').subscribe(function (e) {
 
         var scale = e.target.width / $('svg').attr('width');
 
@@ -300,7 +308,7 @@ $(document).ready(function () {
         $('svg #circle1').attr('stroke', inpath ? '#00ff00' : '#ff0000');
     });
 
-    Rx.Observable.fromEvent($('canvas.circuit-preview'), 'click').subscribe(function (e) {
+    Observable.fromEvent($('canvas.circuit-preview'), 'click').subscribe(function (e) {
         var scale = e.target.width / BotoGP.DefaultWidth;
         var x = Math.round(e.offsetX / scale), y = Math.round(e.offsetY / scale);
         $.get("/api/heatmaps/" + $('body').data("circuit-id") + "/tileinfo?x=" + x + "&y=" + y, function (d) {

@@ -8,9 +8,6 @@
     <div v-if="error" class="error">
         Error:
       {{ error }}
-      <!-- ul>
-        <li v-for="(value, key) in error">{{key}} {{value}}</li>
-      </ul -->
     </div>
 
     <div v-if="circuitDetails" class="content">
@@ -25,7 +22,7 @@
     name: 'circuit',
     data() { 
       return {
-        title: 'Getting circuit details...',
+        title: 'Circuit details...',
         circuitDetails: null,
         loading: false,
         error: null
@@ -41,21 +38,11 @@
       $.getJSON('/api/circuits/' + this.$route.params.circuitid)
       .then((data) => {
           _this.circuitDetails = data
-            _this.loading = false
+          _this.loading = false
       }, (err) => {
-
-            _this.loading = false
+          _this.loading = false
           _this.error = err;
       });
-      /*
-       (err, post) => {
-        this.loading = false
-        if (err) {
-          this.error = err.toString()
-        } else {
-          this.circuitDetails = post
-        }
-      })*/
     }
   }
 </script>

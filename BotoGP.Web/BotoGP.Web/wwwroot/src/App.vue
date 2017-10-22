@@ -15,7 +15,7 @@
         msg: 'Bundled with Brunch!'
       }
     }
-  }
+  } 
 </script>
 
 <style>

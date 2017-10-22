@@ -3,8 +3,6 @@ import Router from 'vue-router'
 import Hello from '../components/Hello'
 import CircuitDetails from '../components/CircuitDetails'
 
-// CircuitDetails
-
 Vue.use(Router)
 
 export default new Router({
