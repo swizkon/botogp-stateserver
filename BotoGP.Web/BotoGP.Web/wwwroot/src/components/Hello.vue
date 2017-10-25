@@ -2,23 +2,27 @@
   <div class="hello">
     <h2>{{ msg }}</h2>
     <div v-for="item in items">
-        <h1>{{ item.name }}</h1>
-        <router-link :to="{ name: 'CircuitDetails', params: { circuitid: item.id }}">
-          <img :src="item.thumb" />
-        </router-link>
+        <circuit-list-item :item="item"></circuit-list-item>
     </div>
   </div>
 </template>
 
 <script>
+
+import CircuitListItem from './CircuitListItem'
+
   export default {
     name: 'hello',
     data() { 
-      var a = "DA stuffxcxc"
+      var a = "Da stuffxcxc"
       return {
         msg: `Nice ${a}`,
         items: []
       }
+    },
+    
+    components: {
+      CircuitListItem
     },
 
     created () {
@@ -27,8 +31,7 @@
             _this.items = $.map(json, (o, i) => {
                         return {
                             "name": o.name,
-                            "id": o.id,
-                            "thumb": `/graphics/circuit/${o.id}/svg?scale=2`
+                            "id": o.id
                         }
                     })
         })

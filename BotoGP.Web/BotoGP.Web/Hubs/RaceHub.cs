@@ -13,7 +13,8 @@ namespace BotoGP.Hubs
 
         public Task NextMove(string racer, int move)
         {
-            return Clients.All.InvokeAsync("Move", racer, move, move);
+            return RaceStateChange(racer, 0, 0, move, move);
+            // return Clients.All.InvokeAsync("Move", racer, move, move);
         }
 
         public Task RaceStateChange(
@@ -36,9 +37,11 @@ namespace BotoGP.Hubs
             return Clients.All.InvokeAsync("Crash", racer);
         }
 
-        public void JoinRace(string raceId)
+        public void JoinTour(string racer, string tour)
         {
-            this.Groups.AddAsync(this.Context.ConnectionId, raceId);
+            this.Groups.AddAsync(this.Context.ConnectionId, tour);
+
+            this.RaceStateChange(racer, 0,0,0,0);
         }
 
         public Task LeaveRace(string raceId)
