@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '../components/Hello'
 import CircuitDetails from '../components/CircuitDetails'
-import CircuitListItem from '../components/CircuitListItem'
+
+// import CircuitListItem from '../components/CircuitListItem'
 
 Vue.use(Router)
 

@@ -36,7 +36,7 @@ namespace BotoGP.stateserver.Controllers
     <title>Circuit</title>
     <g id=""main"">
         <path stroke=""#666666"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""{20 * scale}"" fill=""transparent"" d=""{path}"" />
-        <path stroke=""#999999"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""{15 * scale}"" fill=""transparent"" d=""{path}"" />
+        <path stroke=""#cccccc"" stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""{15 * scale}"" fill=""transparent"" d=""{path}"" />
     </g>
 </svg>";
             return new FileContentResult(System.Text.Encoding.UTF8.GetBytes(data), "image/svg+xml");

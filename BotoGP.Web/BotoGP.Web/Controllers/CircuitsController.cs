@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BotoGP.stateserver.Models;
 using BotoGP.stateserver.Repos;
 using BotoGP.Web;
+using BotoGP.Projections;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -68,6 +69,16 @@ namespace BotoGP.stateserver.Controllers
         public Circuit Get(string id)
         {
             return Get().FirstOrDefault(x => x.Id.ToString() == id);
+        }
+
+        // GET api/values/5
+        [HttpGet("references")]
+        public IEnumerable<CircuitReference> GetReferences()
+        {
+            return Get().Select(x => new CircuitReference{
+                    Id = x.Id.ToString(),
+                    Name = x.Name
+            });
         }
 
         // POST api/values

@@ -13,7 +13,7 @@ module.exports = {
   props: ['item'],
   data() {
     return {
-      "thumb": "https://vuejs.org/images/logo.png"
+      // "thumb": null
     }
   },
   created(){

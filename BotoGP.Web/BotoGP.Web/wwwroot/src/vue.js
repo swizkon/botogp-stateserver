@@ -3,6 +3,7 @@ import App from './App'
 import router from './router'
 
 import CircuitListItem from './components/CircuitListItem'
+import Footer from './components/Footer'
 
 import "vueify/lib/insert-css" // required for .vue file <style> tags
 
@@ -14,6 +15,7 @@ new Vue({
     router,
     render: h => h(App),
     components: {
-       'circuit-list-item': CircuitListItem
+       'circuit-list-item': CircuitListItem,
+       'botogp-footer': Footer
     }
 })

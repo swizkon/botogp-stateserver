@@ -27,7 +27,7 @@ import CircuitListItem from './CircuitListItem'
 
     created () {
       var _this = this;
-        $.getJSON('/api/circuits', function (json) {
+        $.getJSON('/api/circuits/references', function (json) {
             _this.items = $.map(json, (o, i) => {
                         return {
                             "name": o.name,

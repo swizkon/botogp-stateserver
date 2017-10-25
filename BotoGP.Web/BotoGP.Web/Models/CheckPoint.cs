@@ -1,6 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
-
+/*
 namespace BotoGP.stateserver.Models
 {
     public class CheckPoint
@@ -24,4 +24,4 @@ namespace BotoGP.stateserver.Models
             return JsonConvert.SerializeObject(this);
         }
     }
-}
+}*/
