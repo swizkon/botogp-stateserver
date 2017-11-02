@@ -8,6 +8,8 @@ using BotoGP.Web;
 using BotoGP.Projections;
 using Microsoft.AspNetCore.Mvc;
 
+using System.Net.Http;
+
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BotoGP.stateserver.Controllers
@@ -97,7 +99,7 @@ namespace BotoGP.stateserver.Controllers
         }
 
         [HttpPost("{id}")]
-        public Circuit Post(string id, [FromBody]UpdateCircuitDto model)
+        public async Task<Circuit> Post(string id, [FromBody]UpdateCircuitDto model)
         {
             var c = this.Get(id);
             
@@ -122,6 +124,11 @@ namespace BotoGP.stateserver.Controllers
             {
                 c.Map.OffTrack = model.OffTrack;
             }
+
+            var client = new HttpClient();
+            var req = new HttpRequestMessage(HttpMethod.Post, "https://5564qhte39.execute-api.eu-west-1.amazonaws.com/prod/circuits?key=" + c.Id.ToString());
+            req.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(c), System.Text.Encoding.UTF8, "application/json");
+            await client.SendAsync(req);
 
             return c;
         }
