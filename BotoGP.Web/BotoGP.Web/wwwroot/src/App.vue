@@ -1,13 +1,11 @@
 <template>
-
-<div class="container body-content">
+  <div class="container body-content">
     <botogp-nav></botogp-nav>
     <div id="app">
       <div class="hello">
         <h1>{{ msg }}</h1>
       </div>
       <router-view></router-view>
-
     </div>
     <botogp-footer></botogp-footer>
   </div>
