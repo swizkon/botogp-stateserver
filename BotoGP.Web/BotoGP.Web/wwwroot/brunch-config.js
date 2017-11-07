@@ -45,10 +45,10 @@
       "src",
       "web/static",
       "test/static"
-    ],
-
+    ]
+    // ,
     // Where to compile files to
-    public: "build"
+    // public: "build"
   },
 
   // Configure your plugins

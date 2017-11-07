@@ -18,8 +18,8 @@ namespace BotoGP.Web
 
         public static IConfiguration Configuration { get; set; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
             services.AddSignalR();
@@ -30,15 +30,15 @@ namespace BotoGP.Web
         {
             RuntimeEnvironment.Setup(env);
 
-			var builder = new ConfigurationBuilder();
+            var builder = new ConfigurationBuilder();
 
-			if (env.IsDevelopment())
-			{
+            if (env.IsDevelopment())
+            {
                 builder.SetBasePath(env.ContentRootPath)
-			           .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
-			}
+                       .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+            }
 
-			Configuration = builder.Build();
+            Configuration = builder.Build();
 
             if (env.IsDevelopment())
             {
@@ -49,7 +49,8 @@ namespace BotoGP.Web
                 app.UseExceptionHandler("/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseDefaultFiles()
+               .UseStaticFiles();
 
             app.UseMvc(routes =>
             {

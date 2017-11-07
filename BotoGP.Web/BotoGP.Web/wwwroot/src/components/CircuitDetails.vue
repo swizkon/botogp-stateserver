@@ -6,8 +6,7 @@
       Loading...
     </div>
     <div v-if="error" class="error">
-        Error:
-      {{ error }}
+        Error: {{ error }}
     </div>
 
     <div v-if="circuitDetails" class="content">
@@ -34,7 +33,6 @@
       
       _this.error = this.circuitDetails = null
       _this.loading = true
-      // replace `getPost` with your data fetching util / API wrapper
       $.getJSON('/api/circuits/' + this.$route.params.circuitid)
       .then((data) => {
           _this.circuitDetails = data
