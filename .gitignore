@@ -25,6 +25,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 **/build/
+**/wwwroot/public/
 **/bower_components/
 
 # Visual Studio 2015 cache/options directory
