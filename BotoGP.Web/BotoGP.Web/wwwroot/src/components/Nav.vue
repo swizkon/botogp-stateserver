@@ -8,12 +8,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">Boto GP <small>(Home)</small></a>
+                <a href="/index.html" class="navbar-brand">Boto GP <small>(Home)</small></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-page="/Circuits/Index">Circuits</a></li>
-                    <li><a asp-page="/About">About</a></li>
+                    <li><a href="/circuits.html">Circuits</a></li>
+                    <li><a href="/About">About</a></li>
                 </ul>
             </div>
         </div>

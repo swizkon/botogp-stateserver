@@ -15,7 +15,7 @@ new Vue({
     router,
     render: h => h(App),
     components: {
-       'circuit-list-item': CircuitListItem,
-       'botogp-footer': Footer
+       'circuit-list-item': CircuitListItem //,
+       // 'botogp-footer': Footer
     }
 })

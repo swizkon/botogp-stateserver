@@ -16,6 +16,10 @@ export default new Router({
       path: '/circuits/:circuitid',
       name: 'CircuitDetails',
       component: CircuitDetails
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })
