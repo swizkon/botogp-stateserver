@@ -99,7 +99,7 @@ import Footer from '../components/Footer'
                         }
                     })
             _this.first = _this.items.shift();
-            _this.msg = "Welcome!";
+            _this.msg = "Splash.vue";
         })
     }
   } 
