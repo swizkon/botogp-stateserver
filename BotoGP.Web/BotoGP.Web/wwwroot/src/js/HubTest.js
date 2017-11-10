@@ -6,6 +6,7 @@ import RenderEngine from "./RenderEngine"
 
 let HubTest = {};
 
+/*
 let load$ = new Subject();
 
 load$.subscribe((x) => {
@@ -15,11 +16,12 @@ load$.subscribe((x) => {
         RenderEngine.drawPreview(m, points)
     })
 });
+*/
 
-var connection;
+// var connection;
 
 $(document).ready(function () {
-
+    /*
     let id = BrowserUtil.getQueryParameter("id");
     var url = `/api/circuits/${id}?only=minimal`
 
@@ -27,7 +29,9 @@ $(document).ready(function () {
         Observable.fromPromise($.getJSON(url)).subscribe(load$);
         $('body').attr('data-circuit-id', id);
     }
+    */
 
+    /*
     connection = new HubConnection('/race');
 
     connection.on('send', data => {
@@ -43,7 +47,7 @@ $(document).ready(function () {
     connection.start()
         .then(() => {
             
-            connection.invoke('send', 'Hello');
+            connection.invoke('send', 'Hello from HubTest.js');
 
             $.ajax({
                 type: "PUT",
@@ -60,7 +64,6 @@ $(document).ready(function () {
 
             Observable.fromEvent($('#circuit-tracer'), 'click')
             .subscribe(function (e) {
-                // connection.invoke("move", "racer-move", e.offsetX, e.offsetY);
                 var d = `/api/racestate/default/defaultracer?key=defaultKey&x=${e.offsetX}&y=${e.offsetY}`
                 $.ajax({
                     type: "POST",
@@ -72,6 +75,9 @@ $(document).ready(function () {
                 });
             });
         });
+        */
+
+
 });
 
 // export default HubTest; 
