@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Hello from '../components/Hello'
 import CircuitDetails from '../components/CircuitDetails'
+import HubTest from '../components/HubTest'
 
 Vue.use(Router)
 
@@ -13,9 +15,14 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/circuits/:circuitid',
+      path: '/circuits/:id/overview',
       name: 'CircuitDetails',
       component: CircuitDetails
+    },
+    {
+      path: '/circuits/:id/hubtest',
+      name: 'HubTest',
+      component: HubTest
     },
     {
       path: '*',

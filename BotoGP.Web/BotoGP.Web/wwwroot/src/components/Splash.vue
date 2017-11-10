@@ -78,7 +78,7 @@ import Footer from '../components/Footer'
     data() {
       return {
         msg: 'Loading circuits...',
-        head: null,
+        first: null,
         items: null
       }
     },
@@ -86,7 +86,6 @@ import Footer from '../components/Footer'
       'botogp-nav': Nav,
       'botogp-footer': Footer
     },
-
     created () {
       var _this = this;
         $.getJSON('/api/circuits/references', function (json) {

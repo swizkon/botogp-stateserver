@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Splash from './components/Splash'
 
-import "vueify/lib/insert-css" // required for .vue file <style> tags
+import "vueify/lib/insert-css"
 
 Vue.config.productionTip = false
 

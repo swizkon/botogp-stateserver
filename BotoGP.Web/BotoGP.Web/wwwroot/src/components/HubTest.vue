@@ -1,0 +1,72 @@
+<template>
+  <div class="hubtest">
+    <h2>{{ title }}</h2>
+
+    <div class="loading" v-if="loading">
+      Loading...
+    </div>
+    <div v-if="error" class="error">
+        Error: {{ error }}
+    </div>
+
+    <div v-if="circuitDetails" class="content">
+      <h2>{{ circuitDetails.name }}</h2>
+      <p>{{ circuitDetails.id }}</p>
+
+<svg id="state" width="150" height="100" xmlns="http://www.w3c.org.200/svg" :style="previewStyle">
+    <circle id="racer-default" cx="75" cy="20" r="3" stroke="#006600" fill="#fff" stroke-width="2" style="opacity: 0.8;" />
+    <circle id="racer-move" cx="75" cy="20" r="3" stroke="#003366" fill="#fff" stroke-width="2" style="opacity: 0.8;" />
+</svg>
+
+<canvas style="border:solid 1px gray;"
+            class="circuit-tracer" 
+            id="circuit-tracer"
+            width="600" height="400"></canvas>
+    </div>
+
+
+
+  </div>
+</template>
+
+<script>
+
+  import RenderEngine from "../js/RenderEngine"
+
+  export default {
+    name: 'circuit',
+    data() { 
+      return {
+        title: 'Hub test',
+        circuitDetails: null,
+        loading: false,
+        error: null,
+        previewStyle: null
+      }
+    },
+
+    created () {
+      var _this = this;
+      _this.error = this.circuitDetails = null
+      _this.loading = true
+      $.getJSON('/api/circuits/' + this.$route.params.id)
+      .then((data) => {
+          _this.circuitDetails = data
+          _this.loading = false
+          _this.previewStyle = `border:solid 1px white;background-image:url(/graphics/circuit/${_this.circuitDetails.id}/svg?scale=1);`
+      }, (err) => {
+          _this.loading = false
+          _this.error = err;
+      });
+    },
+    updated (){
+      this.$nextTick(function () {
+          $('canvas.circuit-tracer').each((i, m) => {
+              // console.log(this.circuitDetails)
+              var points = this.circuitDetails.map.checkPoints
+              RenderEngine.drawPreview(m, points)
+          })
+      })
+    }
+  }
+</script>

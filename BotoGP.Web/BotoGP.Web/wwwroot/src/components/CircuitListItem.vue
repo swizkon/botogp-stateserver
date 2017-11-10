@@ -1,8 +1,11 @@
 <template>
   <div>
     <h1>{{ item.name }}</h1>
-    <router-link :to="{ name: 'CircuitDetails', params: { circuitid: item.id }}">
+    <router-link :to="{ name: 'CircuitDetails', params: { id: item.id }}">
       <img :src="thumb" />
+    </router-link>
+    <router-link :to="{ name: 'HubTest', params: { id: item.id }}">
+      HubTest
     </router-link>
   </div>
 </template>
