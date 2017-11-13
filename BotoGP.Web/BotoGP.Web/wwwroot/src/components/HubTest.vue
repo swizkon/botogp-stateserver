@@ -27,12 +27,9 @@
 </template>
 
 <script>
-
   import { Observable, Subject } from "rxjs/Rx"
   import { HubConnection } from "@aspnet/signalr-client"
-
   import RenderEngine from "../js/RenderEngine"
-
 
   var connection;
 
@@ -66,7 +63,6 @@
     updated (){
       this.$nextTick(function () {
           $('canvas.circuit-tracer').each((i, m) => {
-              // console.log(this.circuitDetails)
               var points = this.circuitDetails.map.checkPoints
               RenderEngine.drawPreview(m, points)
           })
@@ -86,14 +82,16 @@
           connection.start()
               .then(() => {
                   
-                  connection.invoke('send', 'Hello from HubTest.js');
+                connection.invoke('send', 'Hello from HubTest.vue');
 
-                  $.ajax({
+                /*
+                $.ajax({
                       type: "PUT",
                       url: "/api/racestate/default/defaultracer?key=defaultKey",
                       contentType: "application/json",
                       data: ""
-                  })
+                })
+                */
                   
                   Observable.fromEvent($('#circuit-tracer'), 'mousemove')
                             .throttleTime(50)

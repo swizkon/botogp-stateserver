@@ -94,7 +94,7 @@ import Footer from '../components/Footer'
                             "name": o.name,
                             "id": o.id,
                             "thumb": `/graphics/circuit/${o.id}/svg`,
-                            "url": `/circuits.html#/circuit/${o.id}/practice`
+                            "url": `/circuits.html#/circuits/${o.id}/practice`
                         }
                     })
             _this.first = _this.items.shift();

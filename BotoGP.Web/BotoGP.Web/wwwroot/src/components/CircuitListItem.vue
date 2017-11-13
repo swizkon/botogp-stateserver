@@ -1,11 +1,22 @@
 <template>
-  <div>
+  <div class="jumbotron circuit-preview">
     <h1>{{ item.name }}</h1>
+
+    <img :src="thumb" />
     <router-link :to="{ name: 'CircuitDetails', params: { id: item.id }}">
-      <img :src="thumb" />
+      Stats
     </router-link>
-    <router-link :to="{ name: 'HubTest', params: { id: item.id }}">
+    <router-link :to="{ name: 'Race', params: { id: item.id }}" class="btn btn-primary btn-lg">
+      Race this circuit
+    </router-link>
+    <router-link :to="{ name: 'Practice', params: { id: item.id }}" class="btn btn-default">
+      Practice
+    </router-link>
+    <router-link :to="{ name: 'HubTest', params: { id: item.id }}" class="btn btn-default">
       HubTest
+    </router-link>
+    <router-link :to="{ name: 'Edit', params: { id: item.id }}" class="btn btn-default">
+      Edit
     </router-link>
   </div>
 </template>
@@ -19,9 +30,8 @@ module.exports = {
       // "thumb": null
     }
   },
-  created(){
-    var _this = this
-    _this.thumb = `/graphics/circuit/${this.item.id}/svg?scale=2`
+  created() {
+    this.thumb = `/graphics/circuit/${this.item.id}/svg?scale=3`
   }
 }
 </script>

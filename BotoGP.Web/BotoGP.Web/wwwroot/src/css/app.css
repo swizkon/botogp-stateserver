@@ -1,4 +1,11 @@
 ﻿/* This file is for your main application css. */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 span.logo{
     font-size:3em;

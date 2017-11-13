@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Hello from '../components/Hello'
 import CircuitDetails from '../components/CircuitDetails'
 import HubTest from '../components/HubTest'
+import Practice from '../components/Practice'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/circuits/:id/hubtest',
       name: 'HubTest',
       component: HubTest
+    },
+    {
+      path: '/circuits/:id/practice',
+      name: 'Practice',
+      component: Practice
     },
     {
       path: '*',
