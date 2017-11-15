@@ -74,7 +74,7 @@
           connection.on('send', data => {
               console.log("send: " + data);
 
-              this.$toasted.success('<b>Master </b> Connected to the race'); //.goAway(2000);
+              this.$toasted.success('<b>SEND </b>  ' + data); //.goAway(2000);
           });
 
           connection.on('move', (racer, x, y) => {
@@ -82,7 +82,7 @@
               stateCircle.attr('cy', y / 4)
               stateCircle.attr('cx', x / 4)
 
-              this.$toasted.show(racer + ' hello billo').goAway(2000)
+              this.$toasted.info(racer + ' x: ' + x).goAway(2000)
           });
 
           connection.start()
@@ -100,7 +100,7 @@
                 */
                   
                   Observable.fromEvent($('#circuit-tracer'), 'mousemove')
-                            .throttleTime(50)
+                            .throttleTime(100)
                             .subscribe(function (e) {
                                 connection.invoke("move", "racer-default", e.offsetX, e.offsetY);
                             });
