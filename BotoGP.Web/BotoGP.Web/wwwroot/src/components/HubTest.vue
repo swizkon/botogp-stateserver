@@ -74,7 +74,7 @@
           connection.on('send', data => {
               console.log("send: " + data);
 
-              this.$toasted.success('Connected'); //.goAway(2000);
+              this.$toasted.success('<b>Master </b> Connected to the race'); //.goAway(2000);
           });
 
           connection.on('move', (racer, x, y) => {

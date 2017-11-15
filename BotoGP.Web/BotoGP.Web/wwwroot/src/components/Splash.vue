@@ -8,8 +8,8 @@
     
 <div id="circuit-carousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
-        <li v-if="first" data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" v-for="(item, index) in items" :data-slide-to="index+1"></li>
+        <li v-if="first" data-target="#circuit-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#circuit-carousel" v-for="(item, index) in items" :data-slide-to="index+1"></li>
     </ol>
     <div class="carousel-inner" role="listbox">
         
