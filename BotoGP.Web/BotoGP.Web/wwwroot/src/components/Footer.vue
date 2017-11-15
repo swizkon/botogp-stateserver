@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
   module.exports = {
     name: 'botogp-footer',
     data() {

@@ -1,6 +1,6 @@
 <template>
   <div class="hubtest">
-    <h3>{{ title }}</h3>
+    <h2>{{ title }}</h2>
 
     <div class="loading" v-if="loading">
       Loading...
@@ -10,8 +10,6 @@
     </div>
 
     <div v-if="circuitDetails" class="content">
-      <h2>{{ circuitDetails.name }}</h2>
-      <p>{{ circuitDetails.id }}</p>
 
       <svg id="state" width="150" height="100" xmlns="http://www.w3c.org.200/svg" :style="previewStyle">
           <circle id="racer-default" cx="75" cy="20" r="3" stroke="#006600" fill="#fff" stroke-width="2" style="opacity: 0.8;" />
@@ -23,6 +21,8 @@
                   id="circuit-tracer"
                   width="600" height="400"></canvas>
     </div>
+
+
   </div>
 </template>
 
@@ -59,9 +59,11 @@
           _this.loading = false
           _this.error = err;
       });
+
     },
     updated (){
       this.$nextTick(function () {
+
           $('canvas.circuit-tracer').each((i, m) => {
               var points = this.circuitDetails.map.checkPoints
               RenderEngine.drawPreview(m, points)
@@ -71,12 +73,16 @@
 
           connection.on('send', data => {
               console.log("send: " + data);
+
+              this.$toasted.success('Connected'); //.goAway(2000);
           });
 
           connection.on('move', (racer, x, y) => {
               var stateCircle = $('#' + racer)
               stateCircle.attr('cy', y / 4)
               stateCircle.attr('cx', x / 4)
+
+              this.$toasted.show(racer + ' hello billo').goAway(2000)
           });
 
           connection.start()
