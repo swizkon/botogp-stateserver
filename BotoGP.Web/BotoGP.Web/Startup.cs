@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -34,8 +35,10 @@ namespace BotoGP.Web
 
             if (env.IsDevelopment())
             {
-                builder.SetBasePath(env.ContentRootPath)
-                       .AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
+				builder.SetBasePath(Directory.GetCurrentDirectory())
+	                    .AddJsonFile("appsettings.local.json", optional: false)
+	                    .AddEnvironmentVariables();
+                
             }
 
             Configuration = builder.Build();

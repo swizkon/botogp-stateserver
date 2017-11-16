@@ -28,13 +28,7 @@
     <Folder Include="wwwroot\src\js\" />
     <Folder Include="wwwroot\src\assets\" />
     <Folder Include="wwwroot\src\css\" />
-    <Folder Include="wwwroot\build\" />
     <Folder Include="wwwroot\src\assets\images\" />
     <Folder Include="wwwroot\src\vendor\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="wwwroot\images\banner2.svg" />
-    <Content Remove="wwwroot\images\banner3.svg" />
-    <Content Remove="wwwroot\images\banner4.svg" />
   </ItemGroup>
 </Project>
