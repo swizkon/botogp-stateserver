@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BotoGP.Domain.Services;
 using BotoGP.stateserver.Models;
 using BotoGP.stateserver.Repos;
 using BotoGP.Web;
@@ -17,6 +18,14 @@ namespace BotoGP.stateserver.Controllers
     {
         private static ConcurrentDictionary<string, string> cache
             = new ConcurrentDictionary<string, string>();
+
+
+        private readonly ICircuitRepository _circuitRepository;
+
+        public HeatMapsController(ICircuitRepository circuitRepository)
+        {
+            _circuitRepository = circuitRepository;
+        }
 
         [HttpGet("{id}/tileinfo")]
         public string GetTileInfo(string id, [FromQuery]int x, [FromQuery]int y)
@@ -56,7 +65,7 @@ namespace BotoGP.stateserver.Controllers
 
         private IDictionary<string, int> Heat(string id)
         {
-            var circuit = new CircuitsController().Get(id);
+            var circuit = new CircuitsController(_circuitRepository).Get(id);
 
             var heat = new Dictionary<string, int>();
 

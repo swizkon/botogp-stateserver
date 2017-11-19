@@ -22,6 +22,7 @@ namespace BotoGP.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Console.WriteLine("ConfigureServices");
             services.AddMvc();
             services.AddSignalR();
         }
@@ -35,15 +36,20 @@ namespace BotoGP.Web
 
             if (env.IsDevelopment())
             {
-				builder.SetBasePath(Directory.GetCurrentDirectory())
+                Console.WriteLine("");
+                Console.WriteLine("env.ContentRootPath:");
+                Console.WriteLine(env.ContentRootPath);
+                Console.WriteLine("");
+
+				builder.SetBasePath(env.ContentRootPath)
 	                    .AddJsonFile("appsettings.local.json", optional: false)
 	                    .AddEnvironmentVariables();
-                
             }
 
             Configuration = builder.Build();
+            Console.WriteLine( string.Join(", ", Configuration.AsEnumerable().Select(x => x.Key)));
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment()) 
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -53,16 +59,15 @@ namespace BotoGP.Web
             }
 
             app.UseDefaultFiles()
-               .UseStaticFiles();
+               .UseStaticFiles()
 
-            app.UseMvc(routes =>
+            .UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
-            });
-
-            app.UseSignalR(routes =>
+            })
+            .UseSignalR(routes =>
             {
                 routes.MapHub<BotoGP.Hubs.RaceHub>("race");
             });

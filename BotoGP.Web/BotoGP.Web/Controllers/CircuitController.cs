@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BotoGP.Domain.Services;
 using BotoGP.stateserver.Models;
 using BotoGP.stateserver.Repos;
 using BotoGP.Web;
@@ -12,10 +13,17 @@ namespace BotoGP.stateserver.Controllers
     [Route("graphics/[controller]")]
     public class CircuitController : Controller
     {
+        private readonly ICircuitRepository _circuitRepository;
+
+        public CircuitController(ICircuitRepository circuitRepository)
+        {
+            _circuitRepository = circuitRepository;
+        }
+
         [HttpGet("{id}/heatmap")]
         public CircuitMap GetHeatMap(string id)
         {
-            var c = new CircuitsController().Get(id);
+            var c = new CircuitsController(_circuitRepository).Get(id);
             return c?.Map;
         }
 
@@ -24,7 +32,7 @@ namespace BotoGP.stateserver.Controllers
         public FileContentResult Svg(string id, int scale = 1)
         {
             string path = "";
-            var c = new CircuitsController().Get(id);
+            var c = new CircuitsController(_circuitRepository).Get(id);
             if(c != null)
             {
                 path = "M" + string.Join(" L", c.Map.CheckPoints.Select(p => $"{p.x * scale},{p.y * scale}")) + " z";

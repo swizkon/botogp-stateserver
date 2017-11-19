@@ -20,7 +20,6 @@ namespace BotoGP.Web
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "public"))
-                // .UseWebRoot(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "build"))
                 .UseStartup<Startup>()
                 .Build();
     }

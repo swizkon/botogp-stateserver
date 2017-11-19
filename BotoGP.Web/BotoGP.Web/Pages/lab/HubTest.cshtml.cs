@@ -13,11 +13,11 @@ namespace BotoGP.Web.Pages
     {
 		public string Message { get; set; }
 
-		public BotoGP.stateserver.Models.Circuit Circuit { get; set; }
+        public string CircuitId { get; set; }
 
         public void OnGet(string id)
         {
-            Circuit = new CircuitsController().Get(id);
+            CircuitId = id;
             Message = id;
         }
     }

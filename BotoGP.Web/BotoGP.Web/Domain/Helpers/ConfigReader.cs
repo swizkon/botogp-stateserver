@@ -1,10 +1,13 @@
-﻿using System;
+﻿
+using Microsoft.Extensions.Configuration;
+
 namespace BotoGP.Domain.Helpers
 {
-    public class ConfigReader
+    public static class ConfigReader
     {
-        public ConfigReader()
+        public static string ReadAppSetting(IConfiguration configuration, string name)
         {
+            return configuration["APPSETTING_" + name] ?? configuration["AppSettings:" + name];
         }
     }
 }

@@ -9,6 +9,7 @@ using BotoGP.Projections;
 using Microsoft.AspNetCore.Mvc;
 
 using System.Net.Http;
+using BotoGP.Domain.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,6 +20,12 @@ namespace BotoGP.stateserver.Controllers
     {
         private static List<Circuit> cache;
         CircuitRepo repo = new CircuitRepo();
+        private readonly ICircuitRepository _circuitRepository;
+
+        public CircuitsController(ICircuitRepository circuitRepository)
+        {
+            _circuitRepository = circuitRepository;
+        }
 
         // GET: api/values
         [HttpGet]
@@ -63,7 +70,7 @@ namespace BotoGP.stateserver.Controllers
 
                 cache = new List<Circuit>(new[] { leMans, assen });
             }
-            return cache ?? (cache = new List<Circuit>(repo.All()));
+            return cache ?? (cache = new List<Circuit>(_circuitRepository.ReadAll().Result));
         }
 
         // GET api/values/5
@@ -85,7 +92,7 @@ namespace BotoGP.stateserver.Controllers
 
         // POST api/values
         [HttpPost]
-        public async void Post([FromQuery]string name)
+        public async Task Post([FromQuery]string name)
         {
             var c = new Circuit
             {
@@ -93,7 +100,11 @@ namespace BotoGP.stateserver.Controllers
             };
 
             if (!RuntimeEnvironment.IsDevelopment)
+            {
                 await repo.CreateIfNotExists(c);
+
+                await _circuitRepository.Store(c);
+            }
 
             cache.Add(c);
         }
@@ -101,7 +112,7 @@ namespace BotoGP.stateserver.Controllers
         [HttpPost("{id}")]
         public async Task<Circuit> Post(string id, [FromBody]UpdateCircuitDto model)
         {
-            var c = this.Get(id);
+            var c = this.Get(id) ?? new Circuit();
             
             if(!string.IsNullOrWhiteSpace(model?.Name) )
                 c.Name = model.Name;
@@ -125,10 +136,14 @@ namespace BotoGP.stateserver.Controllers
                 c.Map.OffTrack = model.OffTrack;
             }
 
+            await _circuitRepository.Store(c);
+
+            /*
             var client = new HttpClient();
             var req = new HttpRequestMessage(HttpMethod.Post, "https://5564qhte39.execute-api.eu-west-1.amazonaws.com/prod/circuits?key=" + c.Id.ToString());
             req.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(c), System.Text.Encoding.UTF8, "application/json");
             await client.SendAsync(req);
+            */
 
             return c;
         }
