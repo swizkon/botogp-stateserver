@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BotoGP.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,8 @@ namespace BotoGP.Web
             Console.WriteLine("ConfigureServices");
             services.AddMvc();
             services.AddSignalR();
+
+            services.AddSingleton<ICircuitRepository, CircuitRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
