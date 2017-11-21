@@ -19,7 +19,7 @@ namespace BotoGP.stateserver.Controllers
     public class CircuitsController : Controller
     {
         private static List<Circuit> cache;
-        CircuitRepo repo = new CircuitRepo();
+
         private readonly ICircuitRepository _circuitRepository;
 
         public CircuitsController(ICircuitRepository circuitRepository)
@@ -31,8 +31,9 @@ namespace BotoGP.stateserver.Controllers
         [HttpGet]
         public IEnumerable<Circuit> Get()
         {
-            if (cache == null && RuntimeEnvironment.IsDevelopment)
+            if (cache == null)
             {
+                /*
                 var leMans = new Circuit()
                 {
                     Id = new Guid("a2cb2c01-e7c3-4f23-8148-85d8e7eb726a"),
@@ -67,17 +68,20 @@ namespace BotoGP.stateserver.Controllers
                         })
                     }
                 };
-
-                cache = new List<Circuit>(new[] { leMans, assen });
+                */
+                var circuits = _circuitRepository.ReadAll().Result;
+                cache = circuits.ToList(); // new List<Circuit>(new[] { leMans, assen });
             }
-            return cache ?? (cache = new List<Circuit>(_circuitRepository.ReadAll().Result));
+
+            return cache; //?? (cache = new List<Circuit>(_circuitRepository.ReadAll().Result));
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public Circuit Get(string id)
         {
-            return Get().FirstOrDefault(x => x.Id.ToString() == id);
+            var c =  Get();
+            return c.FirstOrDefault(x => x.Id.ToString() == id);
         }
 
         // GET api/values/5
@@ -99,12 +103,7 @@ namespace BotoGP.stateserver.Controllers
                 Name = name
             };
 
-            if (!RuntimeEnvironment.IsDevelopment)
-            {
-                await repo.CreateIfNotExists(c);
-
-                await _circuitRepository.Store(c);
-            }
+            await _circuitRepository.Store(c);
 
             cache.Add(c);
         }
@@ -137,13 +136,6 @@ namespace BotoGP.stateserver.Controllers
             }
 
             await _circuitRepository.Store(c);
-
-            /*
-            var client = new HttpClient();
-            var req = new HttpRequestMessage(HttpMethod.Post, "https://5564qhte39.execute-api.eu-west-1.amazonaws.com/prod/circuits?key=" + c.Id.ToString());
-            req.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(c), System.Text.Encoding.UTF8, "application/json");
-            await client.SendAsync(req);
-            */
 
             return c;
         }

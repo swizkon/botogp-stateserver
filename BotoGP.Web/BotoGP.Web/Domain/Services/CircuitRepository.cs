@@ -3,18 +3,25 @@
 namespace BotoGP.Domain.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
     using BotoGP.stateserver.Models;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json.Linq;
 
     public class CircuitRepository : ICircuitRepository
     {
         IConfiguration _configuration;
 
-        public CircuitRepository(IConfiguration configuration)
+        ILogger _logger;
+
+        public CircuitRepository(IConfiguration configuration, ILogger<CircuitRepository> logger)
         {
             _configuration = configuration;
+
+            _logger = logger;
         }
 
         public async Task<IEnumerable<Circuit>> ReadAll()
@@ -23,9 +30,14 @@ namespace BotoGP.Domain.Services
             var req = new HttpRequestMessage(HttpMethod.Get, buildUrl("/circuits"));
             var result = await client.SendAsync(req);
 
-            var data = result.Content.ReadAsStringAsync();
+            var data = await result.Content.ReadAsStringAsync();
 
-            return Newtonsoft.Json.JsonConvert.DeserializeObject(data.Result) as IEnumerable<Circuit>;
+            var array = Newtonsoft.Json.JsonConvert.DeserializeObject(data) as JArray;
+
+            return array.ToObject<List<Circuit>>();
+            // return d.Select(t => t.<Circuit>());
+
+            // return Newtonsoft.Json.JsonConvert.DeserializeObject(data) as IList<Circuit>;
         }
 
         public async Task<Circuit> Read(string id)
@@ -50,7 +62,6 @@ namespace BotoGP.Domain.Services
         string buildUrl(string path)
         {
             return Helpers.ConfigReader.ReadAppSetting(_configuration, "CircuitsRepositoryBaseUrl") + path;
-            // "https://5564qhte39.execute-api.eu-west-1.amazonaws.com/prod/circuit?id=" + id;
         }
     }
 }
