@@ -12,6 +12,8 @@
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 **/*.local.json
+**/appsettings.Development.json
+**/appsettings.Development.1.json
 
 # Build results
 [Dd]ebug/
@@ -291,3 +293,4 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 BotoGP.Web/BotoGP.Web/appsettings.local.json
+BotoGP.Web/BotoGP.Web/appsettings.Development.1.json

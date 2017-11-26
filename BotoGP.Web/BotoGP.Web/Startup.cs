@@ -18,7 +18,7 @@ namespace BotoGP.Web
         {
             Console.WriteLine("Startup(IConfiguration configuration)");
             Configuration = configuration;
-            
+
             Console.WriteLine(string.Join(", ", Configuration.AsEnumerable().Select(x => x.Key)));
 
         }
@@ -79,7 +79,7 @@ namespace BotoGP.Web
             services.AddMvc();
             services.AddSignalR();
 
-            services.AddScoped<ICircuitRepository, CircuitRepository>();
+            services.AddSingleton<ICircuitRepository, CircuitRepository>();
 
             services.AddLogging();
         }
