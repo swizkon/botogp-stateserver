@@ -16,26 +16,20 @@ namespace BotoGP.Web
     {
         public Startup(IConfiguration configuration)
         {
+            Console.WriteLine("Startup(IConfiguration configuration)");
             Configuration = configuration;
+            
+            Console.WriteLine(string.Join(", ", Configuration.AsEnumerable().Select(x => x.Key)));
+
         }
 
         public static IConfiguration Configuration { get; set; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-            Console.WriteLine("ConfigureServices");
-            services.AddMvc();
-            services.AddSignalR();
-
-            services.AddSingleton<ICircuitRepository, CircuitRepository>();
-
-            services.AddLogging();
-        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            Console.WriteLine("Configure(IApplicationBuilder app, IHostingEnvironment env)");
             RuntimeEnvironment.Setup(env);
 
             var builder = new ConfigurationBuilder();
@@ -47,15 +41,15 @@ namespace BotoGP.Web
                 Console.WriteLine(env.ContentRootPath);
                 Console.WriteLine("");
 
-				builder.SetBasePath(env.ContentRootPath)
-	                    .AddJsonFile("appsettings.local.json", optional: false)
-	                    .AddEnvironmentVariables();
+                builder.SetBasePath(env.ContentRootPath)
+                        .AddJsonFile("appsettings.local.json", optional: false)
+                        .AddEnvironmentVariables();
             }
 
             Configuration = builder.Build();
-            Console.WriteLine( string.Join(", ", Configuration.AsEnumerable().Select(x => x.Key)));
+            Console.WriteLine(string.Join(", ", Configuration.AsEnumerable().Select(x => x.Key)));
 
-            if (env.IsDevelopment()) 
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -65,18 +59,29 @@ namespace BotoGP.Web
             }
 
             app.UseDefaultFiles()
-               .UseStaticFiles()
+                .UseStaticFiles()
+                .UseMvc(routes =>
+                {
+                    routes.MapRoute(
+                        name: "default",
+                        template: "{controller}/{action=Index}/{id?}");
+                })
+                .UseSignalR(routes =>
+                {
+                    routes.MapHub<BotoGP.Hubs.RaceHub>("race");
+                });
+        }
+        
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            Console.WriteLine("ConfigureServices(IServiceCollection services)");
+            services.AddMvc();
+            services.AddSignalR();
 
-            .UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            })
-            .UseSignalR(routes =>
-            {
-                routes.MapHub<BotoGP.Hubs.RaceHub>("race");
-            });
+            services.AddScoped<ICircuitRepository, CircuitRepository>();
+
+            services.AddLogging();
         }
     }
 }

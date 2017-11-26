@@ -20,8 +20,11 @@ namespace BotoGP.Domain.Services
         public CircuitRepository(IConfiguration configuration, ILogger<CircuitRepository> logger)
         {
             _configuration = configuration;
-
             _logger = logger;
+            
+            _logger.LogInformation("StorageConnectionString");
+            _logger.LogInformation(_configuration["StorageConnectionString"]);
+            _logger.LogInformation( string.Join(",", _configuration.AsEnumerable().Select(x => x.Key)));
         }
 
         public async Task<IEnumerable<Circuit>> ReadAll()
