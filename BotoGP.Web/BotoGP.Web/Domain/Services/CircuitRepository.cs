@@ -17,6 +17,8 @@ namespace BotoGP.Domain.Services
 
         ILogger _logger;
 
+        private static HttpClient client = new HttpClient();
+
         public CircuitRepository(IConfiguration configuration, ILogger<CircuitRepository> logger)
         {
             _configuration = configuration;
@@ -24,39 +26,26 @@ namespace BotoGP.Domain.Services
             
             _logger.LogInformation("StorageConnectionString");
             _logger.LogInformation(_configuration["StorageConnectionString"]);
-            _logger.LogInformation( string.Join(",", _configuration.AsEnumerable().Select(x => x.Key)));
         }
 
         public async Task<IEnumerable<Circuit>> ReadAll()
         {
-            var client = new HttpClient();
-            var req = new HttpRequestMessage(HttpMethod.Get, buildUrl("/circuits"));
-            var result = await client.SendAsync(req);
+            var result = await client.GetStringAsync(buildUrl("/circuits"));
 
-            var data = await result.Content.ReadAsStringAsync();
-
-            var array = Newtonsoft.Json.JsonConvert.DeserializeObject(data) as JArray;
+            var array = Newtonsoft.Json.JsonConvert.DeserializeObject(result) as JArray;
 
             return array.ToObject<List<Circuit>>();
-            // return d.Select(t => t.<Circuit>());
-
-            // return Newtonsoft.Json.JsonConvert.DeserializeObject(data) as IList<Circuit>;
         }
 
         public async Task<Circuit> Read(string id)
         {
-            var client = new HttpClient();
-            var req = new HttpRequestMessage(HttpMethod.Get, buildUrl("/circuit?id=" + id));
-            var result = await client.SendAsync(req);
+            var result = await client.GetStringAsync(buildUrl("/circuit?id=" + id));
 
-            var data = result.Content.ReadAsStringAsync();
-
-            return Newtonsoft.Json.JsonConvert.DeserializeObject(data.Result) as Circuit;
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(result) as Circuit;
         }
 
         public async Task Store(Circuit circuit)
         {
-            var client = new HttpClient();
             var req = new HttpRequestMessage(HttpMethod.Post, buildUrl("/circuits?key=" + circuit.Id.ToString()));
             req.Content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(circuit), System.Text.Encoding.UTF8, "application/json");
             await client.SendAsync(req);
