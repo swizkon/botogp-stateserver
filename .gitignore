@@ -292,5 +292,7 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
 BotoGP.Web/BotoGP.Web/appsettings.local.json
 BotoGP.Web/BotoGP.Web/appsettings.Development.1.json
+BotoGP.Web/BotoGP.Web/appsettings.Development.json
