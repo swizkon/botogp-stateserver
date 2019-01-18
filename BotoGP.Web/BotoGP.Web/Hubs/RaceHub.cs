@@ -8,7 +8,7 @@ namespace BotoGP.Hubs
     {
         public Task Send(string message)
         {
-            return Clients.All.InvokeAsync("Send", message);
+            return Clients.All.SendAsync("Send", message);
         }
 
         public Task NextMove(string racer, int move)
@@ -24,29 +24,29 @@ namespace BotoGP.Hubs
             int verticalVelocity, 
             int horizontalVelocity)
         {
-            return Clients.All.InvokeAsync("RaceStateChange", racer, x, y, verticalVelocity, horizontalVelocity);
+            return Clients.All.SendAsync("RaceStateChange", racer, x, y, verticalVelocity, horizontalVelocity);
         }
 
         public Task Move(string racer, int x, int y)
         {
-            return Clients.All.InvokeAsync("Move", racer, x, y);
+            return Clients.All.SendAsync("Move", racer, x, y);
         }
 
         public Task CrashInfo(string racer)
         {
-            return Clients.All.InvokeAsync("Crash", racer);
+            return Clients.All.SendAsync("Crash", racer);
         }
 
         public void JoinTour(string racer, string tour)
         {
-            this.Groups.AddAsync(this.Context.ConnectionId, tour);
+            this.Groups.AddToGroupAsync(this.Context.ConnectionId, tour);
 
             this.RaceStateChange(racer, 0,0,0,0);
         }
 
         public Task LeaveRace(string raceId)
         {
-            return Groups.RemoveAsync(Context.ConnectionId, raceId);
+            return Groups.RemoveFromGroupAsync(Context.ConnectionId, raceId);
         }
 
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.SignalR.Features;
+// using Microsoft.AspNetCore.SignalR.Features;
 
 using BotoGP.Hubs;
 
@@ -56,7 +56,7 @@ namespace BotoGP.stateserver.Controllers
                 Update(racer.RiderId, racer.RiderKey, racer);
             }
 			
-			_hubContext.Clients.All.InvokeAsync("Move", "racer-move", x, y);
+			_hubContext.Clients.All.SendAsync("Move", "racer-move", x, y);
         }
 
         [HttpPut("{id}")]

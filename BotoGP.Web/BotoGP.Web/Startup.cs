@@ -68,7 +68,7 @@ namespace BotoGP.Web
                 })
                 .UseSignalR(routes =>
                 {
-                    routes.MapHub<BotoGP.Hubs.RaceHub>("race");
+                    routes.MapHub<BotoGP.Hubs.RaceHub>("/race");
                 });
         }
         
