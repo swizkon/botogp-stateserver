@@ -21,6 +21,7 @@ namespace BotoGP.Web
 
             Console.WriteLine(string.Join(", ", Configuration.AsEnumerable().Select(x => x.Key)));
 
+
         }
 
         public static IConfiguration Configuration { get; set; }
@@ -42,7 +43,7 @@ namespace BotoGP.Web
                 Console.WriteLine("");
 
                 builder.SetBasePath(env.ContentRootPath)
-                        .AddJsonFile("appsettings.local.json", optional: false)
+                        .AddJsonFile("appsettings.local.json", optional: true)
                         .AddEnvironmentVariables();
             }
 
