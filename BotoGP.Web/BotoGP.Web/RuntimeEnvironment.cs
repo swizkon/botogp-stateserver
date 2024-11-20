@@ -1,19 +1,19 @@
 ﻿using System;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 
-namespace BotoGP.Web
+namespace BotoGP.Web;
+
+public static class RuntimeEnvironment
 {
-    public static class RuntimeEnvironment
+    public static bool IsDevelopment
     {
-        public static bool IsDevelopment
-        {
-            get; private set;
-        }
-
-        public static void Setup(IHostingEnvironment env)
-        {
-            IsDevelopment = env.IsDevelopment();
-        }
-
+        get; private set;
     }
+
+    public static void Setup(IWebHostEnvironment env)
+    {
+        IsDevelopment = env.IsDevelopment(); //.IsDevelopment();
+    }
+
 }

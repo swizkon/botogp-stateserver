@@ -7,18 +7,17 @@ using BotoGP.stateserver.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BotoGP.Web.Pages
+namespace BotoGP.Web.Pages;
+
+public class HubTestModel : PageModel
 {
-    public class HubTestModel : PageModel
+    public string Message { get; set; }
+
+    public string CircuitId { get; set; }
+
+    public void OnGet(string id)
     {
-		public string Message { get; set; }
-
-        public string CircuitId { get; set; }
-
-        public void OnGet(string id)
-        {
-            CircuitId = id;
-            Message = id;
-        }
+        CircuitId = id;
+        Message = id;
     }
 }

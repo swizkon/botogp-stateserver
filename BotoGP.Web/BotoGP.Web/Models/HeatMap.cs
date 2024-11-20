@@ -2,15 +2,14 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace BotoGP.stateserver.Models
-{
-    public class HeatMap
-    {
-        public IDictionary<CheckPoint, int> PointsOfInterest { get; set; } = new Dictionary<CheckPoint, int>();
+namespace BotoGP.stateserver.Models;
 
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
+public class HeatMap
+{
+    public IDictionary<CheckPoint, int> PointsOfInterest { get; set; } = new Dictionary<CheckPoint, int>();
+
+    public override string ToString()
+    {
+        return JsonConvert.SerializeObject(this);
     }
 }

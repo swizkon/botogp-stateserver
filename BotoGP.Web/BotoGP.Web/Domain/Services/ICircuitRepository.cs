@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using BotoGP.stateserver.Models;
 
-namespace BotoGP.Domain.Services
+namespace BotoGP.Domain.Services;
+
+public interface ICircuitRepository
 {
-    public interface ICircuitRepository
-    {
-        Task<IEnumerable<Circuit>> ReadAll();
+    Task<IEnumerable<Circuit>> ReadAll();
 
-        Task<Circuit> Read(string id);
+    Task<Circuit> Read(string id);
 
-        Task Store(Circuit circuit);
-    }
+    Task Store(Circuit circuit);
 }

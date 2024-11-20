@@ -8,25 +8,24 @@ using BotoGP.stateserver.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace BotoGP.Web.Pages
+namespace BotoGP.Web.Pages;
+
+public class PracticeModel : PageModel
 {
-    public class PracticeModel : PageModel
+    private readonly ICircuitRepository _circuitRepository;
+
+    public PracticeModel(ICircuitRepository circuitRepository)
     {
-        private readonly ICircuitRepository _circuitRepository;
+        _circuitRepository = circuitRepository;
+    }
 
-        public PracticeModel(ICircuitRepository circuitRepository)
-        {
-            _circuitRepository = circuitRepository;
-        }
+    public string Message { get; set; }
 
-		public string Message { get; set; }
+    public BotoGP.stateserver.Models.Circuit Circuit { get; set; }
 
-		public BotoGP.stateserver.Models.Circuit Circuit { get; set; }
-
-        public void OnGet(string id)
-        {
-            Circuit = new CircuitsController(_circuitRepository).Get(id);
-            Message = id;
-        }
+    public void OnGet(string id)
+    {
+        Circuit = new CircuitsController(_circuitRepository).Get(id);
+        Message = id;
     }
 }
