@@ -33,7 +33,6 @@ public class CircuitsController : Controller
     {
         if (cache == null)
         {
-            /*
             var leMans = new Circuit()
             {
                 Id = new Guid("a2cb2c01-e7c3-4f23-8148-85d8e7eb726a"),
@@ -68,9 +67,10 @@ public class CircuitsController : Controller
                     })
                 }
             };
-            */
-            var circuits = _circuitRepository.ReadAll().Result;
-            cache = circuits.ToList(); // new List<Circuit>(new[] { leMans, assen });
+            
+            // var circuits = _circuitRepository.ReadAll().Result;
+            // cache = circuits.ToList(); // new List<Circuit>(new[] { leMans, assen });
+            cache = new List<Circuit>(new[] { leMans, assen });
         }
 
         return cache; //?? (cache = new List<Circuit>(_circuitRepository.ReadAll().Result));

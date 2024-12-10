@@ -61,6 +61,7 @@ public class Startup
         }
 
         app.UseDefaultFiles()
+            .UseStaticFiles("/wwwroot/app")
             .UseStaticFiles()
             .UseMvc(routes =>
             {
@@ -68,9 +69,8 @@ public class Startup
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-            
-            
-       // app.MapHub<BotoGP.Hubs.RaceHub>("/race");
+          
+       // app.MapHub<Hubs.RaceHub>("/race");
     }
         
     // This method gets called by the runtime. Use this method to add services to the container.
