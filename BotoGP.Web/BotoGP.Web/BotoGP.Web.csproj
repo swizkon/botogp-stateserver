@@ -64,6 +64,5 @@
     <Folder Include="wwwroot\src\css\" />
     <Folder Include="wwwroot\src\assets\images\" />
     <Folder Include="wwwroot\src\vendor\" />
-    <Folder Include="Domain\Helpers\" />
   </ItemGroup>
 </Project>
