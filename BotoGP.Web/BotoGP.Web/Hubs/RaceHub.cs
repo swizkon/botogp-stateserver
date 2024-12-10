@@ -48,5 +48,4 @@ public class RaceHub : Hub
     {
         return Groups.RemoveFromGroupAsync(Context.ConnectionId, raceId);
     }
-
 }
