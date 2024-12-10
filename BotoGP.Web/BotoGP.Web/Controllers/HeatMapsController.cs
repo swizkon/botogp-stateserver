@@ -19,7 +19,6 @@ public class HeatMapsController : Controller
     private static ConcurrentDictionary<string, string> cache
         = new ConcurrentDictionary<string, string>();
 
-
     private readonly ICircuitRepository _circuitRepository;
 
     public HeatMapsController(ICircuitRepository circuitRepository)

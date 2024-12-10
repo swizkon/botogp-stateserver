@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using BotoGP.Domain.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace BotoGP.Web;
 
@@ -32,7 +28,6 @@ public class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         Console.WriteLine("Configure(IApplicationBuilder app, IHostingEnvironment env)");
-        RuntimeEnvironment.Setup(env);
 
         var builder = new ConfigurationBuilder();
 

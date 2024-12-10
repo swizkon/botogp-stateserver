@@ -58,7 +58,6 @@
     <Folder Include="Properties\PublishSettings\" />
     <Folder Include="Pages\Circuits\" />
     <Folder Include="Pages\lab\" />
-    <Folder Include="Repos\" />
     <Folder Include="wwwroot\src\" />
     <Folder Include="wwwroot\src\js\" />
     <Folder Include="wwwroot\src\assets\" />
